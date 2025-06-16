@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 #SBATCH --job-name=hisat2
-#SBATCH --mail-user=cweidman@umich.edu
+#SBATCH --mail-user=lingsn@umich.edu
 #SBATCH --mail-type=BEGIN,END,FAIL
 #SBATCH --output=hisat2_%u_%A_%a.out
-#SBATCH --array=0-19
+#SBATCH --array=0-2
 #SBATCH --account=cweidman0
-#SBATCH --time=8:00:00
+#SBATCH --time=2:00:00
 #SBATCH --mem=16000m
 #SBATCH --partition=standard
 #SBATCH --ntasks-per-node=2
@@ -33,26 +33,11 @@ eval "$(conda shell.bash hook)"
 conda activate ~/miniconda3/envs/RNA-SEQ
 
 declare -a tasks=(
-"run_hisat2.py --input Sample_6_processed_fastqs/A549-CDDO24hr-Rep1 --index /home/cweidman/Software/genome_indices/hisat2_hg38/hg38_tran/genome_tran --annotation /home/cweidman/Software/genome_indices/homo_sapiens/Homo_sapiens.GRCh38.96.gtf --output alignments -I -C 2 -S /home/cweidman/Software/genome_indices/hisat2_hg38/Homo_sapiens.GRCh38.96.splicesites.txt"
-"run_hisat2.py --input Sample_16_processed_fastqs/A549-CDDO24hr-Rep2 --index /home/cweidman/Software/genome_indices/hisat2_hg38/hg38_tran/genome_tran --annotation /home/cweidman/Software/genome_indices/homo_sapiens/Homo_sapiens.GRCh38.96.gtf --output alignments -I -C 2 -S /home/cweidman/Software/genome_indices/hisat2_hg38/Homo_sapiens.GRCh38.96.splicesites.txt"
-"run_hisat2.py --input Sample_5_processed_fastqs/A549-DMSO-Rep1 --index /home/cweidman/Software/genome_indices/hisat2_hg38/hg38_tran/genome_tran --annotation /home/cweidman/Software/genome_indices/homo_sapiens/Homo_sapiens.GRCh38.96.gtf --output alignments -I -C 2 -S /home/cweidman/Software/genome_indices/hisat2_hg38/Homo_sapiens.GRCh38.96.splicesites.txt"
-"run_hisat2.py --input Sample_15_processed_fastqs/A549-DMSO-Rep2 --index /home/cweidman/Software/genome_indices/hisat2_hg38/hg38_tran/genome_tran --annotation /home/cweidman/Software/genome_indices/homo_sapiens/Homo_sapiens.GRCh38.96.gtf --output alignments -I -C 2 -S /home/cweidman/Software/genome_indices/hisat2_hg38/Homo_sapiens.GRCh38.96.splicesites.txt"
-"run_hisat2.py --input Sample_4_processed_fastqs/H520-CDDO24hr-Rep1 --index /home/cweidman/Software/genome_indices/hisat2_hg38/hg38_tran/genome_tran --annotation /home/cweidman/Software/genome_indices/homo_sapiens/Homo_sapiens.GRCh38.96.gtf --output alignments -I -C 2 -S /home/cweidman/Software/genome_indices/hisat2_hg38/Homo_sapiens.GRCh38.96.splicesites.txt"
-"run_hisat2.py --input Sample_14_processed_fastqs/H520-CDDO24hr-Rep2 --index /home/cweidman/Software/genome_indices/hisat2_hg38/hg38_tran/genome_tran --annotation /home/cweidman/Software/genome_indices/homo_sapiens/Homo_sapiens.GRCh38.96.gtf --output alignments -I -C 2 -S /home/cweidman/Software/genome_indices/hisat2_hg38/Homo_sapiens.GRCh38.96.splicesites.txt"
-"run_hisat2.py --input Sample_3_processed_fastqs/H520-DMSO-Rep1 --index /home/cweidman/Software/genome_indices/hisat2_hg38/hg38_tran/genome_tran --annotation /home/cweidman/Software/genome_indices/homo_sapiens/Homo_sapiens.GRCh38.96.gtf --output alignments -I -C 2 -S /home/cweidman/Software/genome_indices/hisat2_hg38/Homo_sapiens.GRCh38.96.splicesites.txt"
-"run_hisat2.py --input Sample_13_processed_fastqs/H520-DMSO-Rep2 --index /home/cweidman/Software/genome_indices/hisat2_hg38/hg38_tran/genome_tran --annotation /home/cweidman/Software/genome_indices/homo_sapiens/Homo_sapiens.GRCh38.96.gtf --output alignments -I -C 2 -S /home/cweidman/Software/genome_indices/hisat2_hg38/Homo_sapiens.GRCh38.96.splicesites.txt"
-"run_hisat2.py --input Sample_2_processed_fastqs/HNY-CDDO24hr-Rep1 --index /home/cweidman/Software/genome_indices/hisat2_hg38/hg38_tran/genome_tran --annotation /home/cweidman/Software/genome_indices/homo_sapiens/Homo_sapiens.GRCh38.96.gtf --output alignments -I -C 2 -S /home/cweidman/Software/genome_indices/hisat2_hg38/Homo_sapiens.GRCh38.96.splicesites.txt"
-"run_hisat2.py --input Sample_12_processed_fastqs/HNY-CDDO24hr-Rep3 --index /home/cweidman/Software/genome_indices/hisat2_hg38/hg38_tran/genome_tran --annotation /home/cweidman/Software/genome_indices/homo_sapiens/Homo_sapiens.GRCh38.96.gtf --output alignments -I -C 2 -S /home/cweidman/Software/genome_indices/hisat2_hg38/Homo_sapiens.GRCh38.96.splicesites.txt"
-"run_hisat2.py --input Sample_1_processed_fastqs/HNY-DMSO-Rep1 --index /home/cweidman/Software/genome_indices/hisat2_hg38/hg38_tran/genome_tran --annotation /home/cweidman/Software/genome_indices/homo_sapiens/Homo_sapiens.GRCh38.96.gtf --output alignments -I -C 2 -S /home/cweidman/Software/genome_indices/hisat2_hg38/Homo_sapiens.GRCh38.96.splicesites.txt"
-"run_hisat2.py --input Sample_11_processed_fastqs/HNY-DMSO-Rep3 --index /home/cweidman/Software/genome_indices/hisat2_hg38/hg38_tran/genome_tran --annotation /home/cweidman/Software/genome_indices/homo_sapiens/Homo_sapiens.GRCh38.96.gtf --output alignments -I -C 2 -S /home/cweidman/Software/genome_indices/hisat2_hg38/Homo_sapiens.GRCh38.96.splicesites.txt"
-"run_hisat2.py --input Sample_10_processed_fastqs/HNY-KAV13-DMSO-RPMI-Blast-Rep2 --index /home/cweidman/Software/genome_indices/hisat2_hg38/hg38_tran/genome_tran --annotation /home/cweidman/Software/genome_indices/homo_sapiens/Homo_sapiens.GRCh38.96.gtf --output alignments -I -C 2 -S /home/cweidman/Software/genome_indices/hisat2_hg38/Homo_sapiens.GRCh38.96.splicesites.txt"
-"run_hisat2.py --input Sample_20_processed_fastqs/HNY-KAV13-DMSO-RPMI-Blast-Rep3 --index /home/cweidman/Software/genome_indices/hisat2_hg38/hg38_tran/genome_tran --annotation /home/cweidman/Software/genome_indices/homo_sapiens/Homo_sapiens.GRCh38.96.gtf --output alignments -I -C 2 -S /home/cweidman/Software/genome_indices/hisat2_hg38/Homo_sapiens.GRCh38.96.splicesites.txt"
-"run_hisat2.py --input Sample_9_processed_fastqs/HNY-KAV13-DMSO-RPMI-Rep2 --index /home/cweidman/Software/genome_indices/hisat2_hg38/hg38_tran/genome_tran --annotation /home/cweidman/Software/genome_indices/homo_sapiens/Homo_sapiens.GRCh38.96.gtf --output alignments -I -C 2 -S /home/cweidman/Software/genome_indices/hisat2_hg38/Homo_sapiens.GRCh38.96.splicesites.txt"
-"run_hisat2.py --input Sample_19_processed_fastqs/HNY-KAV13-DMSO-RPMI-Rep3 --index /home/cweidman/Software/genome_indices/hisat2_hg38/hg38_tran/genome_tran --annotation /home/cweidman/Software/genome_indices/homo_sapiens/Homo_sapiens.GRCh38.96.gtf --output alignments -I -C 2 -S /home/cweidman/Software/genome_indices/hisat2_hg38/Homo_sapiens.GRCh38.96.splicesites.txt"
-"run_hisat2.py --input Sample_8_processed_fastqs/SKMES1-CDDO24hr-Rep1 --index /home/cweidman/Software/genome_indices/hisat2_hg38/hg38_tran/genome_tran --annotation /home/cweidman/Software/genome_indices/homo_sapiens/Homo_sapiens.GRCh38.96.gtf --output alignments -I -C 2 -S /home/cweidman/Software/genome_indices/hisat2_hg38/Homo_sapiens.GRCh38.96.splicesites.txt"
-"run_hisat2.py --input Sample_18_processed_fastqs/SKMES1-CDDO24hr-Rep2 --index /home/cweidman/Software/genome_indices/hisat2_hg38/hg38_tran/genome_tran --annotation /home/cweidman/Software/genome_indices/homo_sapiens/Homo_sapiens.GRCh38.96.gtf --output alignments -I -C 2 -S /home/cweidman/Software/genome_indices/hisat2_hg38/Homo_sapiens.GRCh38.96.splicesites.txt"
-"run_hisat2.py --input Sample_7_processed_fastqs/SKMES1-DMSO-Rep1 --index /home/cweidman/Software/genome_indices/hisat2_hg38/hg38_tran/genome_tran --annotation /home/cweidman/Software/genome_indices/homo_sapiens/Homo_sapiens.GRCh38.96.gtf --output alignments -I -C 2 -S /home/cweidman/Software/genome_indices/hisat2_hg38/Homo_sapiens.GRCh38.96.splicesites.txt"
-"run_hisat2.py --input Sample_17_processed_fastqs/SKMES1-DMSO-Rep2 --index /home/cweidman/Software/genome_indices/hisat2_hg38/hg38_tran/genome_tran --annotation /home/cweidman/Software/genome_indices/homo_sapiens/Homo_sapiens.GRCh38.96.gtf --output alignments -I -C 2 -S /home/cweidman/Software/genome_indices/hisat2_hg38/Homo_sapiens.GRCh38.96.splicesites.txt"
+"run_hisat2.py --input 7KO-Cyto-BS_processed_fastqs/KEH-Rep1-7KO-HEK293T-Cyto-BS --index /home/lingsn/Software/genome_indices/hisat2_hg38/hg38p14_tran/GCF_000001405.40_GRCh38.p14_tran.1.ht2 --annotation /home/lingsn/Software/genome_indices/hisat2_hg38/hg38p14_tran/GCF_000001405.40_GRCh38.p14_genomic.gtf --output alignments -I -C 2 -S /home/lingsn/Software/genome_indices/hisat2_hg38/hg38p14_tran/GCF_000001405.40_GRCh38.p14_splice_sites.txt"
+
+"run_hisat2.py --input 7KO-Cyto-BS_processed_fastqs/KEH-Rep2-7KO-HEK293T-Cyto-BS --index /home/lingsn/Software/genome_indices/hisat2_hg38/hg38p14_tran/GCF_000001405.40_GRCh38.p14_tran.1.ht2 --annotation /home/lingsn/Software/genome_indices/hisat2_hg38/hg38p14_tran/GCF_000001405.40_GRCh38.p14_genomic.gtf --output alignments -I -C 2 -S /home/lingsn/Software/genome_indices/hisat2_hg38/hg38p14_tran/GCF_000001405.40_GRCh38.p14_splice_sites.txt"
+
+"run_hisat2.py --input 7KO-Cyto-BS_processed_fastqs/KEH-Rep3-7KO-HEK293T-Cyto-BS --index /home/lingsn/Software/genome_indices/hisat2_hg38/hg38p14_tran/GCF_000001405.40_GRCh38.p14_tran.1.ht2 --annotation /home/lingsn/Software/genome_indices/hisat2_hg38/hg38p14_tran/GCF_000001405.40_GRCh38.p14_genomic.gtf --output alignments -I -C 2 -S /home/lingsn/Software/genome_indices/hisat2_hg38/hg38p14_tran/GCF_000001405.40_GRCh38.p14_splice_sites.txt"
 )
 eval ${tasks[$SLURM_ARRAY_TASK_ID]}
 

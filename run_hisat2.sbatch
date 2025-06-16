@@ -33,11 +33,11 @@ eval "$(conda shell.bash hook)"
 conda activate ~/miniconda3/envs/RNA-SEQ
 
 declare -a tasks=(
-"run_hisat2.py --input 7KO-Cyto-BS_processed_fastqs/KEH-Rep1-7KO-HEK293T-Cyto-BS --index /home/lingsn/Software/genome_indices/hisat2_hg38/hg38p14_tran/GCF_000001405.40_GRCh38.p14_tran.1.ht2 --annotation /home/lingsn/Software/genome_indices/hisat2_hg38/hg38p14_tran/GCF_000001405.40_GRCh38.p14_genomic.gtf --output alignments -I -C 2 -S /home/lingsn/Software/genome_indices/hisat2_hg38/hg38p14_tran/GCF_000001405.40_GRCh38.p14_splice_sites.txt"
+"run_hisat2.py --input 7KO-Cyto-BS_processed_fastqs/KEH-Rep1-7KO-HEK293T-Cyto-BS --index /home/lingsn/Software/genome_indices/hisat2_hg38/hg38p14_tran/GCF_000001405.40_GRCh38.p14_tran --annotation /home/lingsn/Software/genome_indices/hisat2_hg38/hg38p14_tran/GCF_000001405.40_GRCh38.p14_genomic.gtf --output alignments -I -C 2 -S /home/lingsn/Software/genome_indices/hisat2_hg38/hg38p14_tran/GCF_000001405.40_GRCh38.p14_splice_sites.txt"
 
-"run_hisat2.py --input 7KO-Cyto-BS_processed_fastqs/KEH-Rep2-7KO-HEK293T-Cyto-BS --index /home/lingsn/Software/genome_indices/hisat2_hg38/hg38p14_tran/GCF_000001405.40_GRCh38.p14_tran.1.ht2 --annotation /home/lingsn/Software/genome_indices/hisat2_hg38/hg38p14_tran/GCF_000001405.40_GRCh38.p14_genomic.gtf --output alignments -I -C 2 -S /home/lingsn/Software/genome_indices/hisat2_hg38/hg38p14_tran/GCF_000001405.40_GRCh38.p14_splice_sites.txt"
+"run_hisat2.py --input 7KO-Cyto-BS_processed_fastqs/KEH-Rep2-7KO-HEK293T-Cyto-BS --index /home/lingsn/Software/genome_indices/hisat2_hg38/hg38p14_tran/GCF_000001405.40_GRCh38.p14_tran --annotation /home/lingsn/Software/genome_indices/hisat2_hg38/hg38p14_tran/GCF_000001405.40_GRCh38.p14_genomic.gtf --output alignments -I -C 2 -S /home/lingsn/Software/genome_indices/hisat2_hg38/hg38p14_tran/GCF_000001405.40_GRCh38.p14_splice_sites.txt"
 
-"run_hisat2.py --input 7KO-Cyto-BS_processed_fastqs/KEH-Rep3-7KO-HEK293T-Cyto-BS --index /home/lingsn/Software/genome_indices/hisat2_hg38/hg38p14_tran/GCF_000001405.40_GRCh38.p14_tran.1.ht2 --annotation /home/lingsn/Software/genome_indices/hisat2_hg38/hg38p14_tran/GCF_000001405.40_GRCh38.p14_genomic.gtf --output alignments -I -C 2 -S /home/lingsn/Software/genome_indices/hisat2_hg38/hg38p14_tran/GCF_000001405.40_GRCh38.p14_splice_sites.txt"
+"run_hisat2.py --input 7KO-Cyto-BS_processed_fastqs/KEH-Rep3-7KO-HEK293T-Cyto-BS --index /home/lingsn/Software/genome_indices/hisat2_hg38/hg38p14_tran/GCF_000001405.40_GRCh38.p14_tran --annotation /home/lingsn/Software/genome_indices/hisat2_hg38/hg38p14_tran/GCF_000001405.40_GRCh38.p14_genomic.gtf --output alignments -I -C 2 -S /home/lingsn/Software/genome_indices/hisat2_hg38/hg38p14_tran/GCF_000001405.40_GRCh38.p14_splice_sites.txt"
 )
 eval ${tasks[$SLURM_ARRAY_TASK_ID]}
 

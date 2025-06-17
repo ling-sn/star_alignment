@@ -2,8 +2,9 @@ from pathlib import Path
 import subprocess
 import traceback
 import re
+import argparse
 
-def star_index():
+def star_index(overhang):
     """
     Before proceeding, the `star_hg38` folder must be
     located in the directory containing the other data 
@@ -17,20 +18,6 @@ def star_index():
 
     if len(list(Path(genome_dir).glob("*"))) == 4: ## ensures this only runs if index hasn't been created yet
         try:
-            print("""--sjdbOverhang asks for the number READLENGTH-1, where READLENGTH is the length of your 
-                  sequencing reads. For example, the ideal value for Illumina 2x100b paired-end reads is 100-1=99. 
-                  For reads of varying length, the ideal value is max(ReadLength)-1. However, in most cases, the 
-                  default value 100 will work as well as the ideal value.""")
-            while True:
-                overhang = int(input("Please input the overhang value.\nIf nothing is entered, the default value 100 will be used."))
-                if re.search(r"\D", overhang):
-                    print("Your input should be a number.")
-                if overhang == "":
-                    overhang = 100
-                    break
-                else:
-                    break
-
             cmd = ["STAR", "--runThreadN", str(threads),
                    "--runMode", "genomeGenerate",
                    "--genomeDir", str(genome_dir),
@@ -52,6 +39,9 @@ def star_index():
         print("Index already exists.")
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--overhang", type = int, default = 100, help = "Overhang value (default: 100)")
+    args = parser.parse_args()
     print("Creating STAR index...")
-    star_index()
+    star_index(args.overhang)
     print("Index created.")

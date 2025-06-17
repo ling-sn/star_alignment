@@ -30,4 +30,4 @@
 module purge
 eval "$(conda shell.bash hook)"
 conda activate ~/miniconda3/envs/RNA-STAR
-python3 star_index.py
+python3 star_index.py --overhang=100

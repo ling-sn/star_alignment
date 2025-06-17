@@ -1,7 +1,6 @@
 from pathlib import Path
 import subprocess
 import traceback
-import re
 import argparse
 
 def star_index(overhang):

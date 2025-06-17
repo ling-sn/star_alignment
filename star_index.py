@@ -5,8 +5,8 @@ import re
 
 def star_index():
     """
-    Before proceeding, the `star_hg38` folder should
-    be in the starting directory containing the data 
+    Before proceeding, the `star_hg38` folder must be
+    located in the directory containing the other data 
     folders you want to process.
     """
     current_path = Path.cwd()

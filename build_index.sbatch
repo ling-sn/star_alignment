@@ -5,7 +5,7 @@
 #SBATCH --output=/dev/null
 #SBATCH --account=cweidman0
 #SBATCH --time=20:00
-#SBATCH --mem=40000m
+#SBATCH --mem=32000m
 #SBATCH --partition=standard
 #SBATCH --ntasks-per-node=2
 #SBATCH --nodes=1

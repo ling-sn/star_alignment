@@ -15,7 +15,7 @@ def star_index():
     gtf_file = f"{genome_dir}/GCF_000001405.40_GRCh38.p14_genomic.gtf"
     threads = 2
 
-    if len(list(Path(genome_dir).glob("*"))) != 4: ## ensures this only runs if index hasn't been created yet
+    if len(list(Path(genome_dir).glob("*"))) == 4: ## ensures this only runs if index hasn't been created yet
         try:
             print("""--sjdbOverhang asks for the number READLENGTH-1, where READLENGTH is the length of your 
                   sequencing reads. For example, the ideal value for Illumina 2x100b paired-end reads is 100-1=99. 

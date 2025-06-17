@@ -2,7 +2,7 @@
 #SBATCH --job-name=build_index
 #SBATCH --mail-user=lingsn@umich.edu
 #SBATCH --mail-type=BEGIN,END,FAIL
-#SBATCH --output=/dev/null
+#SBATCH --output=build_index_%u_%A_%a.out
 #SBATCH --account=cweidman0
 #SBATCH --time=20:00
 #SBATCH --mem=32000m

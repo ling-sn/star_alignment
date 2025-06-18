@@ -5,7 +5,7 @@
 #SBATCH --output=build_index_%u_%A_%a.out
 #SBATCH --account=cweidman0
 #SBATCH --time=8:00:00
-#SBATCH --mem=32000m
+#SBATCH --mem=40000m
 #SBATCH --partition=standard
 #SBATCH --ntasks-per-node=2
 #SBATCH --nodes=1

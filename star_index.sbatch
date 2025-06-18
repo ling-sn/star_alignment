@@ -4,7 +4,7 @@
 #SBATCH --mail-type=BEGIN,END,FAIL
 #SBATCH --output=build_index_%u_%A_%a.out
 #SBATCH --account=cweidman0
-#SBATCH --time=1:00:00
+#SBATCH --time=8:00:00
 #SBATCH --mem=32000m
 #SBATCH --partition=standard
 #SBATCH --ntasks-per-node=2

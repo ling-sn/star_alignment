@@ -3,16 +3,6 @@ import traceback
 import argparse
 import subprocess
 
-"""
-STAR --runThreadN 12 
---runMode alignReads 
---readFilesIn FASTQ FILE
---readFilesCommand gunzip -c
---genomeDir /home/lingsn/scratch/star/star_hg38 
---outFileNamePrefix 7KO-Cyto-BS_processed_fastqs/alignments/
---outSAMtype BAM SortedByCoordinate
-"""
-
 class StarAligner:
     def __init__(self, output_dir, input_name):
         self.output_folder = output_dir/input_name
@@ -136,15 +126,6 @@ def collect_files(subfolder, match_pattern, list):
         str_name = str(i)
         list.append(str_name)
 
-## EXAMPLE:
-# for merged_file in subfolder.glob("*merged*"):
-#     str_name = str(merged_file)
-#     merged.append(str_name)
-#
-# for unpaired_file in subfolder.glob("*unpaired*"):
-#     str_name = str(file)
-#     unpaired.append(str_name)
-
 def star_pipeline(folder_name, genomeDir, runThreadN):
     current_path = Path.cwd()
     input_dir = current_path/folder_name
@@ -187,8 +168,8 @@ def star_pipeline(folder_name, genomeDir, runThreadN):
             aligner.unpaired_reads(runThreadN, unpaired, star_index)
             aligner.paired_reads(runThreadN, paired_r1, paired_r2, star_index) 
 
-            ## merge bam files, convert to bai, & remove old files
-            aligner.merge_bam(input_name)
+    ## merge bam files, convert to bai, & remove old files
+    aligner.merge_bam(input_name)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description = "Runs STAR alignment.")

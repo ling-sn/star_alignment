@@ -9,7 +9,7 @@ class StarAligner:
         self.r1_filename = None
         self.r2_filename = None
         
-    def merged_reads(self, runThreadN, merged, star_index, file):
+    def merged_reads(self, runThreadN, merged, star_index):
         """
         Align single-end reads (merged)
         """
@@ -29,14 +29,14 @@ class StarAligner:
                                     capture_output = True, 
                                     text = True)
         except subprocess.CalledProcessError as e: ## error handling
-            print(f"Failed to align merged or unpaired fastq file {file.name}: {e}")
+            print(f"Failed to align merged fastqs with STAR: {e}")
             print("STDERR:", e.stderr)
             print("STDOUT:", e.stdout)
             traceback.print_exc()
             raise
         return result
 
-    def unpaired_reads(self, runThreadN, unpaired, star_index, file):
+    def unpaired_reads(self, runThreadN, unpaired, star_index):
         """
         Align single-end reads (unpaired)
         """
@@ -56,14 +56,14 @@ class StarAligner:
                                     capture_output = True, 
                                     text = True)
         except subprocess.CalledProcessError as e: ## error handling
-            print(f"Failed to align merged or unpaired fastq file {file.name}: {e}")
+            print(f"Failed to align unpaired fastqs with STAR: {e}")
             print("STDERR:", e.stderr)
             print("STDOUT:", e.stdout)
             traceback.print_exc()
             raise
         return result
 
-    def paired_reads(self, runThreadN, r1_str, r2_str, star_index, file):
+    def paired_reads(self, runThreadN, r1_str, r2_str, star_index):
         """
         Align paired-end reads (unmerged)
         """
@@ -83,7 +83,7 @@ class StarAligner:
                                     capture_output = True, 
                                     text = True)
         except subprocess.CalledProcessError as e: ## error handling
-            print(f"Failed to align unmerged fastq file {file.name}: {e}")
+            print(f"Failed to align unmerged fastq files: {e}")
             print("STDERR:", e.stderr)
             print("STDOUT:", e.stdout)
             traceback.print_exc()
@@ -143,30 +143,32 @@ def star_pipeline(folder_name, genomeDir, runThreadN):
             paired_r1 = []
             paired_r2 = []
 
-            for file in subfolder.glob("*.fastq.gz"): ## iterate through indiv. files in subfolder
+            for file in subfolder.glob("*.fastq.gz"): ## iterate through files and add to corresponding lsits
                 try:
                     ## run star alignment functions
                     if "_merged" in file.name:
                         collect_files(subfolder, "*_merged*", merged)
-                        aligner.merged_reads(runThreadN, merged, star_index, file)
                     elif "_unpaired" in file.name:
                         collect_files(subfolder, "*_unpaired*", unpaired)
-                        aligner.unpaired_reads(runThreadN, unpaired, star_index, file)
                     elif "_unmerged" in file.name:
                         for r1_file in subfolder.glob("*_unmerged_R1*"):
                             r1_str_name = str(r1_file)
                             r2_file = r1_file.with_name(r1_file.name.replace("_R1_", "_R2_"))
                             r2_str_name = str(r2_file)
                             paired_r1.append(r1_str_name)
-                            paired_r2.append(r2_str_name)
-                        r1_str = ",".join(paired_r1)
-                        r2_str = ",".join(paired_r2)
-                        aligner.paired_reads(runThreadN, r1_str, r2_str, star_index, file)            
+                            paired_r2.append(r2_str_name)           
                 except Exception as e:
                     print(f"Failed to align {file.name} with STAR and produce .bam files: {e}")
                     traceback.print_exc()
                     continue
             
+            ## run star alignment 
+            r1_str = ",".join(paired_r1)
+            r2_str = ",".join(paired_r2)
+            aligner.merged_reads(runThreadN, merged, star_index)
+            aligner.unpaired_reads(runThreadN, unpaired, star_index)
+            aligner.paired_reads(runThreadN, r1_str, r2_str, star_index) 
+
             ## merge bam files, convert to bai, & remove old files
             aligner.merge_bam(input_name)
 

@@ -63,17 +63,18 @@ class StarAligner:
             raise
         return result
 
-    def paired_reads(self, runThreadN, r1_str, r2_str, star_index):
+    def paired_reads(self, runThreadN, paired_r1, paired_r2, star_index):
         """
         Align paired-end reads (unmerged)
         """
-        paired_str = " ".join([r1_str, r2_str])
+        r1_str = ",".join(paired_r1)
+        r2_str = ",".join(paired_r2)
         prefix = self.output_folder/"paired"
 
         try:
             cmd = ["STAR", "--runThreadN", str(runThreadN),
                    "--runMode", "alignReads",
-                   "--readFilesIn", str(paired_str),
+                   "--readFilesIn", str(r1_str), str(r2_str),
                    "--readFilesCommand", "gunzip", "-c",
                    "--genomeDir", str(star_index),
                    "--outFileNamePrefix", str(prefix),
@@ -162,12 +163,10 @@ def star_pipeline(folder_name, genomeDir, runThreadN):
                     traceback.print_exc()
                     continue
             
-            ## run star alignment 
-            r1_str = ",".join(paired_r1)
-            r2_str = ",".join(paired_r2)
+            ## run star alignment
             aligner.merged_reads(runThreadN, merged, star_index)
             aligner.unpaired_reads(runThreadN, unpaired, star_index)
-            aligner.paired_reads(runThreadN, r1_str, r2_str, star_index) 
+            aligner.paired_reads(runThreadN, paired_r1, paired_r2, star_index) 
 
             ## merge bam files, convert to bai, & remove old files
             aligner.merge_bam(input_name)

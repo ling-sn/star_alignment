@@ -9,12 +9,12 @@ class StarAligner:
         self.r1_filename = None
         self.r2_filename = None
         
-    def merged_reads(self, runThreadN, merged, star_index):
+    def merged_reads(self, runThreadN, merged, star_index, subf_name):
         """
         Align single-end reads (merged)
         """
         merged_str = ",".join(merged)
-        prefix = self.output_folder/"merged"
+        prefix = self.output_folder/subf_name/"merged"
         
         try:
             cmd = ["STAR", "--runThreadN", str(runThreadN),
@@ -36,12 +36,12 @@ class StarAligner:
             raise
         return result
 
-    def unpaired_reads(self, runThreadN, unpaired, star_index):
+    def unpaired_reads(self, runThreadN, unpaired, star_index, subf_name):
         """
         Align single-end reads (unpaired)
         """
         unpaired_str = ",".join(unpaired)
-        prefix = self.output_folder/"unpaired"
+        prefix = self.output_folder/subf_name/"unpaired"
         
         try:
             cmd = ["STAR", "--runThreadN", str(runThreadN),
@@ -63,13 +63,13 @@ class StarAligner:
             raise
         return result
 
-    def paired_reads(self, runThreadN, paired_r1, paired_r2, star_index):
+    def paired_reads(self, runThreadN, paired_r1, paired_r2, star_index, subf_name):
         """
         Align paired-end reads (unmerged)
         """
         r1_str = ",".join(paired_r1)
         r2_str = ",".join(paired_r2)
-        prefix = self.output_folder/"paired"
+        prefix = self.output_folder/subf_name/"paired"
 
         try:
             cmd = ["STAR", "--runThreadN", str(runThreadN),
@@ -91,14 +91,14 @@ class StarAligner:
             raise
         return result
     
-    def merge_bam(self, input_name):
+    def merge_bam(self, subf_name):
         """
         Merges all .bam files, then 
         sorts and indexes into .bai
         """
-        merged_bam = self.output_folder/f"{input_name}.bam"
+        merged_bam = self.output_folder/subf_name/f"{subf_name}.bam"
         bam_list = [*self.output_folder.glob("*out.bam")] # detect .bam files
-        rm_list = [*self.output_folder.glob("*out.bam")] # can also rm: *self.output_folder.glob("*.out"), *self.output_folder.glob("*out.tab")
+        rm_list = [*self.output_folder.glob("*out.bam")]
 
         try:
             subprocess.run(["samtools", "merge", ## merge all .bam files into one
@@ -143,6 +143,7 @@ def star_pipeline(folder_name, genomeDir, runThreadN):
             unpaired = []
             paired_r1 = []
             paired_r2 = []
+            subf_name = subfolder.name
 
             for file in subfolder.glob("*.fastq.gz"): ## iterate through files and add to corresponding lsits
                 try:
@@ -164,12 +165,12 @@ def star_pipeline(folder_name, genomeDir, runThreadN):
                     continue
             
             ## run star alignment
-            aligner.merged_reads(runThreadN, merged, star_index)
-            aligner.unpaired_reads(runThreadN, unpaired, star_index)
-            aligner.paired_reads(runThreadN, paired_r1, paired_r2, star_index) 
+            aligner.merged_reads(runThreadN, merged, star_index, subf_name)
+            aligner.unpaired_reads(runThreadN, unpaired, star_index, subf_name)
+            aligner.paired_reads(runThreadN, paired_r1, paired_r2, star_index, subf_name) 
 
-    ## merge bam files, convert to bai, & remove old files
-    aligner.merge_bam(input_name)
+            ## merge bam files, convert to bai, & remove old files
+            aligner.merge_bam(subf_name)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description = "Runs STAR alignment.")

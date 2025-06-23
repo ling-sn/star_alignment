@@ -9,17 +9,44 @@ class StarAligner:
         self.r1_filename = None
         self.r2_filename = None
         
-    def single_reads(self, runThreadN, single, star_index, file):
+    def merged_reads(self, runThreadN, merged, star_index, file):
         """
-        Align single-end reads (merged/unpaired)
+        Align single-end reads (merged)
         """
-        single_str = ",".join(single)
-        prefix = self.output_folder/"single"
+        merged_str = ",".join(merged)
+        prefix = self.output_folder/"merged"
         
         try:
             cmd = ["STAR", "--runThreadN", str(runThreadN),
                    "--runMode", "alignReads",
-                   "--readFilesIn", str(single_str),
+                   "--readFilesIn", str(merged_str),
+                   "--readFilesCommand", "gunzip", "-c",
+                   "--genomeDir", str(star_index),
+                   "--outFileNamePrefix", str(prefix),
+                   "--outSAMtype", "BAM", "SortedByCoordinate"]
+            result = subprocess.run(cmd, 
+                                    check = True, 
+                                    capture_output = True, 
+                                    text = True)
+        except subprocess.CalledProcessError as e: ## error handling
+            print(f"Failed to align merged or unpaired fastq file {file.name}: {e}")
+            print("STDERR:", e.stderr)
+            print("STDOUT:", e.stdout)
+            traceback.print_exc()
+            raise
+        return result
+
+    def unpaired_reads(self, runThreadN, unpaired, star_index, file):
+        """
+        Align single-end reads (unpaired)
+        """
+        unpaired_str = ",".join(unpaired)
+        prefix = self.output_folder/"unpaired"
+        
+        try:
+            cmd = ["STAR", "--runThreadN", str(runThreadN),
+                   "--runMode", "alignReads",
+                   "--readFilesIn", str(unpaired_str),
                    "--readFilesCommand", "gunzip", "-c",
                    "--genomeDir", str(star_index),
                    "--outFileNamePrefix", str(prefix),
@@ -93,9 +120,9 @@ class StarAligner:
             traceback.print_exc()
             raise
 
-def star_pipeline(folder_path, genomeDir, runThreadN):
+def star_pipeline(folder_name, genomeDir, runThreadN):
     current_path = Path.cwd()
-    input_dir = Path(folder_path)
+    input_dir = current_path/folder_name
     star_index = Path(genomeDir)
     output_dir = current_path/"alignments"
     output_dir.mkdir(exist_ok=True)
@@ -106,17 +133,22 @@ def star_pipeline(folder_path, genomeDir, runThreadN):
 
     for subfolder in input_dir.iterdir(): ## amount of subfolders = number of replicates
         if subfolder.is_dir():
-            single = []
+            merged = []
+            unpaired = []
             paired_r1 = []
             paired_r2 = []
 
             for file in subfolder.glob("*.fastq.gz"): ## iterate through indiv. files in subfolder
                 try:
                     ## run star alignment functions
-                    if "_merged" in file.name or "_unpaired" in file.name:
-                        single_str_name = str(file)
-                        single.append(single_str_name)
-                        aligner.single_reads(runThreadN, single, star_index, file)
+                    if "_merged" in file.name:
+                        merged_str_name = str(file)
+                        merged.append(merged_str_name)
+                        aligner.merged_reads(runThreadN, merged, star_index, file)
+                    elif "_unpaired" in file.name:
+                        unpaired_str_name = str(file)
+                        unpaired.append(unpaired_str_name)
+                        aligner.unpaired_reads(runThreadN, unpaired, star_index, file)
                     elif "_unmerged" in file.name:
                         for r1_file in subfolder.glob("*unmerged_R1*"):
                             r1_str_name = str(r1_file)
@@ -126,7 +158,7 @@ def star_pipeline(folder_path, genomeDir, runThreadN):
                             paired_r2.append(r2_str_name)
                         r1_str = ",".join(paired_r1)
                         r2_str = ",".join(paired_r2)
-                        aligner.paired_reads(runThreadN, r1_str, r2_str, star_index, file)                    
+                        aligner.paired_reads(runThreadN, r1_str, r2_str, star_index, file)            
                 except Exception as e:
                     print(f"Failed to align {file.name} with STAR and produce .bam files: {e}")
                     traceback.print_exc()

@@ -120,6 +120,11 @@ class StarAligner:
             traceback.print_exc()
             raise
 
+def collect_files(subfolder, match_pattern, list):
+    for i in subfolder.glob(match_pattern): ## used for finding files and appending them to a list; avoids redundant for loop later
+        str_name = str(i)
+        list.append(str_name)
+
 def star_pipeline(folder_name, genomeDir, runThreadN):
     current_path = Path.cwd()
     input_dir = current_path/folder_name
@@ -142,15 +147,13 @@ def star_pipeline(folder_name, genomeDir, runThreadN):
                 try:
                     ## run star alignment functions
                     if "_merged" in file.name:
-                        merged_str_name = str(file)
-                        merged.append(merged_str_name)
+                        collect_files(subfolder, "*_merged*", merged)
                         aligner.merged_reads(runThreadN, merged, star_index, file)
                     elif "_unpaired" in file.name:
-                        unpaired_str_name = str(file)
-                        unpaired.append(unpaired_str_name)
+                        collect_files(subfolder, "*_unpaired*", unpaired)
                         aligner.unpaired_reads(runThreadN, unpaired, star_index, file)
                     elif "_unmerged" in file.name:
-                        for r1_file in subfolder.glob("*unmerged_R1*"):
+                        for r1_file in subfolder.glob("*_unmerged_R1*"):
                             r1_str_name = str(r1_file)
                             r2_file = r1_file.with_name(r1_file.name.replace("_R1_", "_R2_"))
                             r2_str_name = str(r2_file)

@@ -9,7 +9,7 @@
 #SBATCH --mem=195000m
 #SBATCH --cpus-per-task=12
 #SBATCH --partition=standard
-#SBATCH --ntasks-per-node=2
+#SBATCH --ntasks-per-node=1
 #SBATCH --nodes=1
 ################################################################################
 # Edit the strings under 'declare -a tasks=(' to match your experiments.

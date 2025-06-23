@@ -32,7 +32,7 @@
 
 module purge
 eval "$(conda shell.bash hook)"
-conda activate ~/miniconda3/envs/RNA-SEQ-2
+conda activate ~/miniconda3/envs/RNA-STAR
 
 declare -a tasks=(
 "python3 run_star.py --input 7KO-Cyto-BS_processed_fastqs --genomeDir /home/lingsn/scratch/star/star_hg38 --runThreadN=12"

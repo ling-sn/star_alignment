@@ -3,7 +3,7 @@
 #SBATCH --mail-user=lingsn@umich.edu
 #SBATCH --mail-type=BEGIN,END,FAIL
 #SBATCH --output=run_star_%u_%A_%a.out
-#SBATCH --array=0-11%3
+#SBATCH --array=0-11%2
 #SBATCH --account=cweidman0
 #SBATCH --time=12:00:00
 #SBATCH --mem=130000m

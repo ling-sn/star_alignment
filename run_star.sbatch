@@ -6,7 +6,7 @@
 #SBATCH --array=0-11%3
 #SBATCH --account=cweidman0
 #SBATCH --time=12:00:00
-#SBATCH --mem=195000m
+#SBATCH --mem=130000m
 #SBATCH --cpus-per-task=12
 #SBATCH --partition=standard
 #SBATCH --ntasks-per-node=1

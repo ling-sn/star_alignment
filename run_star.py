@@ -3,6 +3,16 @@ import traceback
 import argparse
 import subprocess
 
+"""
+STAR --runThreadN 12 
+--runMode alignReads 
+--readFilesIn FASTQ FILE
+--readFilesCommand gunzip -c
+--genomeDir /home/lingsn/scratch/star/star_hg38 
+--outFileNamePrefix 7KO-Cyto-BS_processed_fastqs/alignments/
+--outSAMtype BAM SortedByCoordinate
+"""
+
 class StarAligner:
     def __init__(self, output_dir, input_name):
         self.output_folder = output_dir/input_name
@@ -97,8 +107,8 @@ class StarAligner:
         sorts and indexes into .bai
         """
         merged_bam = self.output_folder/f"{input_name}.bam"
-        bam_list = [*self.output_folder.glob("*.bam")] # detect .bam files
-        rm_list = [*self.output_folder.glob("*out.bam")]
+        bam_list = [*self.output_folder.glob("*out.bam")] # detect .bam files
+        rm_list = [*self.output_folder.glob("*out.bam")] # can also rm: *self.output_folder.glob("*.out"), *self.output_folder.glob("*out.tab")
 
         try:
             subprocess.run(["samtools", "merge", ## merge all .bam files into one
@@ -125,6 +135,15 @@ def collect_files(subfolder, match_pattern, list):
     for i in subfolder.glob(match_pattern): ## used for finding files and appending them to a list; avoids redundant for loop later
         str_name = str(i)
         list.append(str_name)
+
+## EXAMPLE:
+# for merged_file in subfolder.glob("*merged*"):
+#     str_name = str(merged_file)
+#     merged.append(str_name)
+#
+# for unpaired_file in subfolder.glob("*unpaired*"):
+#     str_name = str(file)
+#     unpaired.append(str_name)
 
 def star_pipeline(folder_name, genomeDir, runThreadN):
     current_path = Path.cwd()

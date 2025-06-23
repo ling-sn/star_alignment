@@ -113,12 +113,16 @@ def star_pipeline(folder_path, genomeDir, runThreadN):
                 try:
                     ## run star alignment functions
                     if "_merged" in file.name or "_unpaired" in file.name:
-                        single.append(file)
+                        single_str_name = str(file)
+                        single.append(single_str_name)
                         aligner.single_reads(runThreadN, single, star_index, file)
                     elif "_unmerged" in file.name:
                         for r1_file in subfolder.glob("*unmerged_R1*"):
-                            paired_r1.append(r1_file)
-                            paired_r2.append(r1_file.with_name(r1_file.name.replace("_R1_", "_R2_")))
+                            r1_str_name = str(r1_file)
+                            r2_file = r1_file.with_name(r1_file.name.replace("_R1_", "_R2_"))
+                            r2_str_name = str(r2_file)
+                            paired_r1.append(r1_str_name)
+                            paired_r2.append(r2_str_name)
                         r1_str = ",".join(paired_r1)
                         r2_str = ",".join(paired_r2)
                         aligner.paired_reads(runThreadN, r1_str, r2_str, star_index, file)                    

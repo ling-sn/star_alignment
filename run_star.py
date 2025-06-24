@@ -127,7 +127,7 @@ def star_pipeline(folder_name, genomeDir, runThreadN):
     input_name = input_dir.name
     star_index = Path(genomeDir)
     output_dir = current_path/"alignments"
-    output_dir.mkdir(exist_ok=True)
+    output_dir.mkdir(exist_ok=True, parents=True)
 
     ## initialize class
     aligner = StarAligner()

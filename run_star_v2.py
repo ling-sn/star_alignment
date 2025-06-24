@@ -201,7 +201,7 @@ def star_pipeline(folder_name, genomeDir, runThreadN):
             paired_r1 = []
             paired_r2 = []
             processed_folder = output_dir/input_name/f"{subfolder.name}_star"
-            processed_folder.mkdir(exist_ok = True)
+            processed_folder.mkdir(exist_ok=True, parents=True)
 
             for file in subfolder.glob("*.fastq.gz"): ## iterate through files and add to corresponding lsits
                 try:

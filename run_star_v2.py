@@ -209,10 +209,9 @@ def star_pipeline(folder_name, genomeDir, runThreadN):
                     if "_merged" in file.name:
                         collect_files(subfolder, "*_merged*", merged)
                     elif "_unpaired" in file.name:
-                        filename = file.name
-                        if "_R2" in filename:
-                            r2_file = filename.with_name(filename.name.replace("_unpaired", "_unpairedrc"))
-                            reverse_complement_fastq(filename, r2_file)
+                        if "_R2" in file.name:
+                            r2_file = file.with_name(file.name.replace("_unpaired", "_unpairedrc"))
+                            reverse_complement_fastq(file, r2_file)
                         collect_files(subfolder, "*_unpaired*", unpaired)
                     elif "_unmerged" in file.name:
                         for r1_file in subfolder.glob("*_unmerged_R1*"):

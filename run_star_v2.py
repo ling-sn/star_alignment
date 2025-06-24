@@ -140,15 +140,14 @@ def reverse_complement_fastq(file, output):
     # Decompress input fastq.gz file using gunzip
     file = Path(file)
     output = Path(output)
+    unzipped_file = file.with_suffix("")
     
-    try:
-        subprocess.run(["gunzip", "-k", str(file)],
-                        check = True,
-                        capture_output = True,
-                        text = True)
-        
-        # Strip extension from path
-        unzipped_file = file.stem
+    try:        
+        if not unzipped_file.exists():
+            subprocess.run(["gunzip", "-k", str(file)],
+                            check = True,
+                            capture_output = True,
+                            text = True)
 
         # Open file and reverse complement bases
         with open(unzipped_file, "r") as input_file, open(output, "w") as output_file:
@@ -166,9 +165,7 @@ def reverse_complement_fastq(file, output):
                     # Non-sequence and non-quality score lines
                     output_file.write(line)
 
-        output_fastq = output + ".gz"
-
-        subprocess.run(["gzip", str(output_fastq)],
+        subprocess.run(["gzip", str(output)],
                         check = True,
                         capture_output = True,
                         shell = True)
@@ -213,7 +210,7 @@ def star_pipeline(folder_name, genomeDir, runThreadN):
                         collect_files(subfolder, "*_merged*", merged)
                     elif "_unpaired" in file.name:
                         if "_R2" in file.name:
-                            r2_file = input_dir/subfolder/file.with_name(file.name.replace("_unpaired", "_unpairedrc"))
+                            r2_file = file.with_name(file.name.replace("_unpaired", "_unpairedrc"))
                             reverse_complement_fastq(file, r2_file)
                         collect_files(subfolder, "*_unpaired*", unpaired)
                     elif "_unmerged" in file.name:

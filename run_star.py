@@ -128,6 +128,7 @@ def collect_files(subfolder, match_pattern, list):
 def star_pipeline(folder_name, genomeDir, runThreadN):
     current_path = Path.cwd()
     input_dir = current_path/folder_name
+    input_name = input_dir.name
     star_index = Path(genomeDir)
     output_dir = current_path/"alignments"
     output_dir.mkdir(exist_ok=True)
@@ -141,7 +142,7 @@ def star_pipeline(folder_name, genomeDir, runThreadN):
             unpaired = []
             paired_r1 = []
             paired_r2 = []
-            processed_folder = output_dir/f"{subfolder.name}_star"
+            processed_folder = output_dir/input_name/f"{subfolder.name}_star"
             processed_folder.mkdir(exist_ok = True)
 
             for file in subfolder.glob("*.fastq.gz"): ## iterate through files and add to corresponding lsits

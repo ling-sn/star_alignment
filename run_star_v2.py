@@ -138,33 +138,36 @@ def reverse_complement_fastq(file, output):
     Manually reverse complement unpaired R2 fastq.gz file
     """
     # Decompress input fastq.gz file using gunzip
-    subprocess.run(["gunzip", "-k", str(file)],
-                    check = True,
-                    capture_output = True,
-                    text = True)
+    file = Path(file)
+    output = Path(output)
     
-    # Strip extension from path
-    unzipped_file = Path(file).name 
+    try:
+        subprocess.run(["gunzip", "-k", str(file)],
+                        check = True,
+                        capture_output = True,
+                        text = True)
+        
+        # Strip extension from path
+        unzipped_file = file.stem
 
-    # Open file and reverse complement bases
-    with open(unzipped_file, "r") as input_file, open(output, "w") as output_file:
-        for i, line in enumerate(input_file):
-            if i % 4 == 1:
-                # Reverse complement sequence
-                sequence = line.strip()
-                reverse_complement = "".join([complement_base(base) for base in sequence[::-1]])
-                output_file.write(reverse_complement + "\n")
-            elif i % 4 == 3: 
-                # Reverse quality scores
-                quality_scores = line.strip()
-                output_file.write(quality_scores[::-1] + "\n") 
-            else:  
-                # Non-sequence and non-quality score lines
-                output_file.write(line)
+        # Open file and reverse complement bases
+        with open(unzipped_file, "r") as input_file, open(output, "w") as output_file:
+            for i, line in enumerate(input_file):
+                if i % 4 == 1:
+                    # Reverse complement sequence
+                    sequence = line.strip()
+                    reverse_complement = "".join([complement_base(base) for base in sequence[::-1]])
+                    output_file.write(reverse_complement + "\n")
+                elif i % 4 == 3: 
+                    # Reverse quality scores
+                    quality_scores = line.strip()
+                    output_file.write(quality_scores[::-1] + "\n") 
+                else:  
+                    # Non-sequence and non-quality score lines
+                    output_file.write(line)
 
-    output_fastq = output + ".gz"
+        output_fastq = output + ".gz"
 
-    try: 
         subprocess.run(["gzip", str(output_fastq)],
                         check = True,
                         capture_output = True,
@@ -210,9 +213,8 @@ def star_pipeline(folder_name, genomeDir, runThreadN):
                         collect_files(subfolder, "*_merged*", merged)
                     elif "_unpaired" in file.name:
                         if "_R2" in file.name:
-                            r2_file = file.with_name(file.name.replace("_unpaired", "_unpairedrc"))
-                            file_path = input_dir/subfolder/file
-                            reverse_complement_fastq(file_path, r2_file)
+                            r2_file = input_dir/subfolder/file.with_name(file.name.replace("_unpaired", "_unpairedrc"))
+                            reverse_complement_fastq(file, r2_file)
                         collect_files(subfolder, "*_unpaired*", unpaired)
                     elif "_unmerged" in file.name:
                         for r1_file in subfolder.glob("*_unmerged_R1*"):

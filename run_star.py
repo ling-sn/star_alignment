@@ -4,10 +4,6 @@ import argparse
 import subprocess
 
 class StarAligner:
-    def __init__(self):
-        self.r1_filename = None
-        self.r2_filename = None
-        
     def merged_reads(self, runThreadN, merged, star_index, processed_folder):
         """
         Align single-end reads (merged)

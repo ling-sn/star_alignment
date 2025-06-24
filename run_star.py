@@ -96,8 +96,8 @@ class StarAligner:
         sorts and indexes into .bai
         """
         merged_bam = processed_folder/f"{subfolder.name}.bam"
-        bam_list = [*self.processed_folder.glob("*out.bam")] # detect .bam files
-        rm_list = [*self.processed_folder.glob("*out.bam")]
+        bam_list = [*processed_folder.glob("*out.bam")] # detect .bam files
+        rm_list = [*processed_folder.glob("*out.bam")]
 
         try:
             subprocess.run(["samtools", "merge", ## merge all .bam files into one

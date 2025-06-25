@@ -170,13 +170,14 @@ def reverse_complement_fastq(file, output):
                         capture_output = True,
                         shell = True)
     except subprocess.CalledProcessError as e:
-        print(f"Failed to create output fastq {output_fastq}: {e}")
+        print(f"Failed to create output fastq {output_file}: {e}")
         print("STDERR:", e.stderr)
         print("STDOUT:", e.stdout)
         traceback.print_exc()
         raise
     else:
         unzipped_file.unlink()
+        file.unlink
 
 def collect_files(subfolder, match_pattern, list):
     for i in subfolder.glob(match_pattern): ## used for finding files and appending them to a list; avoids redundant for loop later
@@ -207,9 +208,9 @@ def star_pipeline(folder_name, genomeDir, runThreadN):
                     if "_merged" in file.name:
                         collect_files(subfolder, "*_merged*", merged)
                     elif "_unpaired" in file.name:
-                        if "_R2" in file.name:
-                            r2_file = file.with_name(file.name.replace("_unpaired", "_unpairedrc"))
-                            reverse_complement_fastq(file, r2_file)
+                        if "_unpaired_R2" in file.name:
+                            output = file.with_name(file.name.replace("_unpaired_", "_unpairedrc_"))
+                            reverse_complement_fastq(file, output)
                         collect_files(subfolder, "*_unpaired*", unpaired)
                     elif "_unmerged" in file.name:
                         for r1_file in subfolder.glob("*_unmerged_R1*"):

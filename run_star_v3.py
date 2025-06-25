@@ -19,7 +19,8 @@ class StarAligner:
                    "--genomeDir", str(star_index),
                    "--outFileNamePrefix", str(prefix),
                    "--outSAMtype", "BAM", "SortedByCoordinate",
-                   "--outFilterMultimapNmax", "20"]
+                   "--outFilterMismatchNoverLmax", "0.04",
+                   "--alignIntronMin", "20"]
             result = subprocess.run(cmd, 
                                     check = True, 
                                     capture_output = True, 
@@ -47,7 +48,8 @@ class StarAligner:
                    "--genomeDir", str(star_index),
                    "--outFileNamePrefix", str(prefix),
                    "--outSAMtype", "BAM", "SortedByCoordinate",
-                   "--outFilterMultimapNmax", "20"]
+                   "--outFilterMismatchNoverLmax", "0.04",
+                   "--alignIntronMin", "20"]
             result = subprocess.run(cmd, 
                                     check = True, 
                                     capture_output = True, 
@@ -76,7 +78,8 @@ class StarAligner:
                    "--genomeDir", str(star_index),
                    "--outFileNamePrefix", str(prefix),
                    "--outSAMtype", "BAM", "SortedByCoordinate",
-                   "--outFilterMultimapNmax", "20"]
+                   "--outFilterMismatchNoverLmax", "0.04",
+                   "--alignIntronMin", "20"]
             result = subprocess.run(cmd, 
                                     check = True, 
                                     capture_output = True, 
@@ -181,6 +184,8 @@ def reverse_complement_fastq(file, output):
     else:
         unzipped_file.unlink()
         file.unlink
+
+## MODIFIED CODE END
 
 def collect_files(subfolder, match_pattern, list):
     for i in subfolder.glob(match_pattern): ## used for finding files and appending them to a list; avoids redundant for loop later

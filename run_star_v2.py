@@ -179,6 +179,8 @@ def reverse_complement_fastq(file, output):
         unzipped_file.unlink()
         file.unlink
 
+## MODIFIED CODE END
+
 def collect_files(subfolder, match_pattern, list):
     for i in subfolder.glob(match_pattern): ## used for finding files and appending them to a list; avoids redundant for loop later
         str_name = str(i)

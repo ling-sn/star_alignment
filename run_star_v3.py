@@ -146,8 +146,6 @@ def complement_base(base):
         return "G"
     elif base == "G":
         return "C"
-    elif base == "N":
-        return "N"
     else:
         return base
     
@@ -193,9 +191,9 @@ def reverse_complement_fastq(file, output):
         print("STDOUT:", e.stdout)
         traceback.print_exc()
         raise
-    else:
-        unzipped_file.unlink()
-        file.unlink()
+    finally:
+        if unzipped_file.exists():
+            unzipped_file.unlink()
 
 ## MODIFIED CODE END
 

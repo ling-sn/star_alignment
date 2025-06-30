@@ -228,7 +228,7 @@ def star_pipeline(folder_name, genomeDir, runThreadN):
                             reverse_complement_fastq(file, output_fastq)
                             for r1_file in subfolder.glob("*_unpaired_R1*"):
                                 r1_str_name = str(r1_file)
-                                r2_str_name = str(output_fastq)
+                                r2_str_name = str(output_fastq) + ".gz"
                                 unpaired_r1.append(r1_str_name)
                                 unpaired_r2.append(r2_str_name)
                     elif "_unmerged" in file.name:

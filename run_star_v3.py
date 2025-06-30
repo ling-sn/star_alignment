@@ -18,8 +18,7 @@ class StarAligner:
                    "--readFilesCommand", "gunzip", "-c",
                    "--genomeDir", str(star_index),
                    "--outFileNamePrefix", str(prefix),
-                   "--outSAMtype", "BAM", "SortedByCoordinate",
-                   "--alignIntronMin", "20"]
+                   "--outSAMtype", "BAM", "SortedByCoordinate"]
             result = subprocess.run(cmd, 
                                     check = True, 
                                     capture_output = True, 
@@ -48,16 +47,14 @@ class StarAligner:
                      "--readFilesCommand", "gunzip", "-c",
                      "--genomeDir", str(star_index),
                      "--outFileNamePrefix", str(prefix_1),
-                     "--outSAMtype", "BAM", "SortedByCoordinate",
-                     "--alignIntronMin", "20"]
+                     "--outSAMtype", "BAM", "SortedByCoordinate"]
             cmd_2 = ["STAR", "--runThreadN", str(runThreadN),
                      "--runMode", "alignReads",
                      "--readFilesIn", str(r2_str),
                      "--readFilesCommand", "gunzip", "-c",
                      "--genomeDir", str(star_index),
                      "--outFileNamePrefix", str(prefix_2),
-                     "--outSAMtype", "BAM", "SortedByCoordinate",
-                     "--alignIntronMin", "20"]
+                     "--outSAMtype", "BAM", "SortedByCoordinate"]
             subprocess.run(cmd_1, 
                            check = True, 
                            capture_output = True, 
@@ -88,8 +85,7 @@ class StarAligner:
                    "--readFilesCommand", "gunzip", "-c",
                    "--genomeDir", str(star_index),
                    "--outFileNamePrefix", str(prefix),
-                   "--outSAMtype", "BAM", "SortedByCoordinate",
-                   "--alignIntronMin", "20"]
+                   "--outSAMtype", "BAM", "SortedByCoordinate"]
             result = subprocess.run(cmd, 
                                     check = True, 
                                     capture_output = True, 
@@ -191,9 +187,8 @@ def reverse_complement_fastq(file, output):
         print("STDOUT:", e.stdout)
         traceback.print_exc()
         raise
-    finally:
-        if unzipped_file.exists():
-            unzipped_file.unlink()
+    if unzipped_file.exists():
+        unzipped_file.unlink()
 
 ## MODIFIED CODE END
 
@@ -228,14 +223,14 @@ def star_pipeline(folder_name, genomeDir, runThreadN):
                         collect_files(subfolder, "*_merged*", merged)
                     elif "_unpaired" in file.name:
                         if "_unpaired_R2" in file.name:
-                            output = file.with_name(file.name.replace("_unpaired_", "_unpairedrc_")).with_suffix("")
-                            reverse_complement_fastq(file, output)
+                            output = file.with_name(file.name.replace("_unpaired_", "_unpairedrc_"))
+                            output_fastq = output.with_suffix("")
+                            reverse_complement_fastq(file, output_fastq)
                         for r1_file in subfolder.glob("*_unpaired_R1*"):
                             r1_str_name = str(r1_file)
                             r2_file = r1_file.with_name(r1_file.name.replace("_unpaired_R1_", "_unpairedrc_R2_"))
-                            r2_str_name = str(r2_file)
                             unpaired_r1.append(r1_str_name)
-                            unpaired_r2.append(r2_str_name)
+                            unpaired_r2.append(output_fastq)
                     elif "_unmerged" in file.name:
                         for r1_file in subfolder.glob("*_unmerged_R1*"):
                             r1_str_name = str(r1_file)

@@ -244,12 +244,12 @@ def star_pipeline(folder_name, genomeDir, runThreadN):
                     continue
             
             ## run star alignment
-            # aligner.merged_reads(runThreadN, merged, star_index, processed_folder)
+            aligner.merged_reads(runThreadN, merged, star_index, processed_folder)
             aligner.unpaired_reads(runThreadN, unpaired_r1, unpaired_r2, star_index, processed_folder)
-            # aligner.paired_reads(runThreadN, paired_r1, paired_r2, star_index, processed_folder) 
+            aligner.paired_reads(runThreadN, paired_r1, paired_r2, star_index, processed_folder) 
 
             ## merge bam files, convert to bai, & remove old files
-            # aligner.merge_bam(processed_folder, subfolder)
+            aligner.merge_bam(processed_folder, subfolder)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description = "Runs STAR alignment.")

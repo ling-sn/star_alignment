@@ -28,7 +28,7 @@ Read the following if you want to manually build the STAR index. Otherwise, feel
 ```
 python3 run_star.py --input 7KO-Cyto-BS_processed_fastqs --genomeDir /home/lingsn/scratch/star/star_hg38 --runThreadN=12
 ```
-* **--input:** Absolute or relative path to folder containing merged, paired, and unpaired fastqs
+* **--input:** Absolute or relative path to folder containing merged, paired, and unpaired fastqs.
 * **--genomeDir:** Path to hg38 genome index. If you are using the pre-built index, you can directly use `/home/lingsn/scratch/star/star_hg38`
 * **--runThreadN=n:** Number of threads, which can be used to speed up processing. By default n=12, and it is recommended to stay within the range of 8-12 threads for optimal results.
 ## Additional information

@@ -37,4 +37,4 @@ python3 run_star.py --input 7KO-Cyto-BS_processed_fastqs --genomeDir /home/lings
   * If you are manually building the STAR index, the process may take up to 9 hours to complete.
 * `run_star`
   * This script will manually reverse complement unpaired R2 fastqs prior to STAR alignment.
-  * The walltime in `run_star.sbatch` will need to be adjusted depending on the size of your data. For example, it took approximately 25 minutes for this script to process a 3.0 GB folder.
+  * The walltime and memory in `run_star.sbatch` will need to be adjusted depending on the size of your data. For example, it takes approximately ??? minutes and ??? GB memory to process one 3.0 GB folder.

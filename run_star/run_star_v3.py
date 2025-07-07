@@ -259,7 +259,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description = "Runs STAR alignment.")
     parser.add_argument("--input", help = "Path to directory with merged, paired, and unpaired fastqs", required = True)
     parser.add_argument("--genomeDir", help = "Path to genome index", required = True)
-    parser.add_argument("--runThreadN", type = int, default = 12, help = "Number of CPU cores (default: 12)")
+    parser.add_argument("--runThreadN", type = int, default = 8, help = "Number of CPU cores (default: 12)")
     args = parser.parse_args()
 
     print("Starting STAR alignment pipeline...")

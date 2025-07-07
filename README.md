@@ -30,11 +30,11 @@ python3 run_star.py --input 7KO-Cyto-BS_processed_fastqs --genomeDir /home/lings
 ```
 * **--input:** Absolute or relative path to folder containing merged, paired, and unpaired fastqs.
 * **--genomeDir:** Path to hg38 genome index. If you are using the pre-built index, you can directly use `/home/lingsn/scratch/star/star_hg38`
-* **--runThreadN=n:** Number of threads. By default n=12, and it is recommended to stay within the range of 8-12 threads for optimal results. However, if you choose to change the number of threads, then `#SBATCH --cpus-per-task=n` must also be changed accordingly within `run_star.sbatch`. 
+* **--runThreadN=n:** Number of threads. By default n=8, and it is recommended to stay within the range of 8-12 threads for optimal results. However, if you choose to change the number of threads, then `#SBATCH --cpus-per-task=n` must also be changed accordingly within `run_star.sbatch`. 
 ## Additional information
 * `star_index`
   * By default, overhang is set to 100 in `star_index.sbatch`. However, you can specify a custom overhang value if necessary. For more information, read about the `--sjdbOverhang` option [here](https://physiology.med.cornell.edu/faculty/skrabanek/lab/angsd/lecture_notes/STARmanual.pdf).
   * If you are manually building the STAR index, the process may take up to 9 hours to complete.
 * `run_star`
   * This script will manually reverse complement unpaired R2 fastqs prior to STAR alignment.
-  * The walltime and memory in `run_star.sbatch` will need to be adjusted depending on the size of your data. For example, it takes approximately ??? minutes and ??? GB memory to process one 3.0 GB folder.
+  * The walltime in `run_star.sbatch` will need to be adjusted depending on the size of your data. For example, it takes approximately 11m to process 3 GB of data, and 2h20m to process 42 GB of data.

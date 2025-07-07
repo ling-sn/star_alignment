@@ -5,9 +5,9 @@
 #SBATCH --output=run_star_%u_%A_%a.out
 #SBATCH --array=0-11%2
 #SBATCH --account=cweidman0
-#SBATCH --time=12:00:00
-#SBATCH --mem=130000m
-#SBATCH --cpus-per-task=12
+#SBATCH --time=3:00:00
+#SBATCH --mem=40000m
+#SBATCH --cpus-per-task=8
 #SBATCH --partition=standard
 #SBATCH --ntasks-per-node=1
 #SBATCH --nodes=1
@@ -35,17 +35,17 @@ eval "$(conda shell.bash hook)"
 conda activate ~/miniconda3/envs/RNA-STAR
 
 declare -a tasks=(
-"python3 run_star.py --input 7KO-Cyto-BS_processed_fastqs --genomeDir /home/lingsn/scratch/star/star_hg38 --runThreadN=12"
-"python3 run_star.py --input 7KO-Cyto-NBS_processed_fastqs --genomeDir /home/lingsn/scratch/star/star_hg38 --runThreadN=12"
-"python3 run_star.py --input 7KO-Nuc-BS_processed_fastqs --genomeDir /home/lingsn/scratch/star/star_hg38 --runThreadN=12"
-"python3 run_star.py --input 7KO-Nuc-NBS_processed_fastqs --genomeDir /home/lingsn/scratch/star/star_hg38 --runThreadN=12"
-"python3 run_star.py --input 7LKO-Cyto-BS_processed_fastqs --genomeDir /home/lingsn/scratch/star/star_hg38 --runThreadN=12"
-"python3 run_star.py --input 7LKO-Cyto-NBS_processed_fastqs --genomeDir /home/lingsn/scratch/star/star_hg38 --runThreadN=12"
-"python3 run_star.py --input 7LKO-Nuc-BS_processed_fastqs --genomeDir /home/lingsn/scratch/star/star_hg38 --runThreadN=12"
-"python3 run_star.py --input 7LKO-Nuc-NBS_processed_fastqs --genomeDir /home/lingsn/scratch/star/star_hg38 --runThreadN=12"
-"python3 run_star.py --input WT-Cyto-BS_processed_fastqs --genomeDir /home/lingsn/scratch/star/star_hg38 --runThreadN=12"
-"python3 run_star.py --input WT-Cyto-NBS_processed_fastqs --genomeDir /home/lingsn/scratch/star/star_hg38 --runThreadN=12"
-"python3 run_star.py --input WT-Nuc-BS_processed_fastqs --genomeDir /home/lingsn/scratch/star/star_hg38 --runThreadN=12"
-"python3 run_star.py --input WT-Nuc-NBS_processed_fastqs --genomeDir /home/lingsn/scratch/star/star_hg38 --runThreadN=12"
+"python3 run_star.py --input 7KO-Cyto-BS_processed_fastqs --genomeDir /home/lingsn/scratch/star/star_hg38 --runThreadN=8"
+"python3 run_star.py --input 7KO-Cyto-NBS_processed_fastqs --genomeDir /home/lingsn/scratch/star/star_hg38 --runThreadN=8"
+"python3 run_star.py --input 7KO-Nuc-BS_processed_fastqs --genomeDir /home/lingsn/scratch/star/star_hg38 --runThreadN=8"
+"python3 run_star.py --input 7KO-Nuc-NBS_processed_fastqs --genomeDir /home/lingsn/scratch/star/star_hg38 --runThreadN=8"
+"python3 run_star.py --input 7LKO-Cyto-BS_processed_fastqs --genomeDir /home/lingsn/scratch/star/star_hg38 --runThreadN=8"
+"python3 run_star.py --input 7LKO-Cyto-NBS_processed_fastqs --genomeDir /home/lingsn/scratch/star/star_hg38 --runThreadN=8"
+"python3 run_star.py --input 7LKO-Nuc-BS_processed_fastqs --genomeDir /home/lingsn/scratch/star/star_hg38 --runThreadN=8"
+"python3 run_star.py --input 7LKO-Nuc-NBS_processed_fastqs --genomeDir /home/lingsn/scratch/star/star_hg38 --runThreadN=8"
+"python3 run_star.py --input WT-Cyto-BS_processed_fastqs --genomeDir /home/lingsn/scratch/star/star_hg38 --runThreadN=8"
+"python3 run_star.py --input WT-Cyto-NBS_processed_fastqs --genomeDir /home/lingsn/scratch/star/star_hg38 --runThreadN=8"
+"python3 run_star.py --input WT-Nuc-BS_processed_fastqs --genomeDir /home/lingsn/scratch/star/star_hg38 --runThreadN=8"
+"python3 run_star.py --input WT-Nuc-NBS_processed_fastqs --genomeDir /home/lingsn/scratch/star/star_hg38 --runThreadN=8"
 )
 eval ${tasks[$SLURM_ARRAY_TASK_ID]}

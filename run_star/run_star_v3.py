@@ -110,7 +110,7 @@ class StarAligner:
         """
         Add XS tags to every read in a stranded .bam file
         """
-        tmp = f"{self.merged_bam.stem}_tmp.bam"
+        self.sam_file = f"{self.merged_bam.stem}.sam"
 
         try:
             file = subprocess.run(["samtools", "view", ## open up merged .bam
@@ -118,19 +118,37 @@ class StarAligner:
                                     stdout = subprocess.PIPE,
                                     check = True, 
                                     text = True)
-            with open(tmp, "w") as out_f:
+            with open(self.sam_file, "w") as out_f:
                 subprocess.run(["awk", "-v", "strType=2", ## run awk script
                                 "-f", str(awk_dir)],
                                 input = file.stdout, 
                                 stdout = out_f,
                                 check = True, 
                                 text = True)
-            subprocess.run(["mv", str(tmp), str(self.merged_bam)], ## rename tmp back to original filename
+            subprocess.run(["rm", str(self.merged_bam)],
+                            check = True, 
                             capture_output = True,
-                            check = True,
                             text = True)
         except subprocess.CalledProcessError as e: ## error handling
             print(f"Failed to add XS tags to {self.merged_bam.name}: {e}")
+            print("STDERR:", e.stderr)
+            print("STDOUT:", e.stdout)
+            traceback.print_exc()
+            raise
+
+    def convert_sam(self):
+        """
+        Converts .sam output from XS tagging into .bam
+        """
+        try:
+            subprocess.run(["samtools", "sort", "-O", "BAM",
+                            "-o", str(self.merged_bam),
+                            str(self.sam_file)],
+                            check = True,
+                            capture_output = True,
+                            text = True)
+        except subprocess.CalledProcessError as e: ## error handling
+            print(f"Failed to convert {self.sam_file.name} to .bam: {e}")
             print("STDERR:", e.stderr)
             print("STDOUT:", e.stdout)
             traceback.print_exc()
@@ -143,7 +161,7 @@ class StarAligner:
         """
         self.merged_bam = processed_folder/f"{subfolder.name}.bam"
         bam_list = [*processed_folder.glob("*out.bam")] # detect .bam files
-        rm_list = [*processed_folder.glob("*out.bam")]
+        rm_list = [*processed_folder.glob("*out.bam"), *processed_folder.glob("*.sam")]
 
         try:
             subprocess.run(["samtools", "merge", ## merge all .bam files into one
@@ -152,6 +170,7 @@ class StarAligner:
                             capture_output = True,
                             text = True)
             self.tagXSstrandedData(awk_dir)
+            self.convert_sam()
             subprocess.run(["samtools", "index", str(self.merged_bam)], ## create .bai from .bam
                             check = True,
                             capture_output = True,

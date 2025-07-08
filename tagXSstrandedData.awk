@@ -1,7 +1,7 @@
-# usage:
-# cat Aligned.out.sam | awk -v strType=2 -f tagXSstrandedData.awk 
-# strType defines strandedness of the libraries: strType = mate whose strand is the same as RNA strand.
-# For instance, for Illumina Tru-seq, strType=2 - the 2nd mate's strand is the same as RNA.
+# This file was sourced from the STAR aligner by Alex Dobin.
+# Apply after creating BAM file: samtools view -h inputbam | awk -v strType=2 -f tagXSstrandedData.awk
+# Use for stranded antisense directional libraries.
+## strType defines strandedness of the libraries: strType = mate whose strand is the same as RNA strand.
 
 
 BEGIN {

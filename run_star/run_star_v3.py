@@ -19,7 +19,8 @@ class StarAligner:
                    "--genomeDir", str(star_index),
                    "--outFileNamePrefix", str(prefix),
                    "--outSAMtype", "BAM", "SortedByCoordinate",
-                   "--outFilterType", "BySJout"]
+                   "--outFilterType", "BySJout",
+                   "--outSAMattributes", "NH", "NM", "AS", "MD"]
             result = subprocess.run(cmd, 
                                     check = True, 
                                     capture_output = True, 
@@ -49,7 +50,8 @@ class StarAligner:
                      "--genomeDir", str(star_index),
                      "--outFileNamePrefix", str(prefix_1),
                      "--outSAMtype", "BAM", "SortedByCoordinate",
-                     "--outFilterType", "BySJout"]
+                     "--outFilterType", "BySJout",
+                     "--outSAMattributes", "NH", "NM", "AS", "MD"]
             cmd_2 = ["STAR", "--runThreadN", str(runThreadN),
                      "--runMode", "alignReads",
                      "--readFilesIn", str(r2_str),
@@ -57,7 +59,8 @@ class StarAligner:
                      "--genomeDir", str(star_index),
                      "--outFileNamePrefix", str(prefix_2),
                      "--outSAMtype", "BAM", "SortedByCoordinate",
-                     "--outFilterType", "BySJout"]
+                     "--outFilterType", "BySJout",
+                     "--outSAMattributes", "NH", "NM", "AS", "MD"]
             subprocess.run(cmd_1, 
                            check = True, 
                            capture_output = True, 
@@ -89,7 +92,8 @@ class StarAligner:
                    "--genomeDir", str(star_index),
                    "--outFileNamePrefix", str(prefix),
                    "--outSAMtype", "BAM", "SortedByCoordinate",
-                   "--outFilterType", "BySJout"]
+                   "--outFilterType", "BySJout",
+                   "--outSAMattributes", "NH", "NM", "AS", "MD"]
             result = subprocess.run(cmd, 
                                     check = True, 
                                     capture_output = True, 

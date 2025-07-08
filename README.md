@@ -1,10 +1,11 @@
 # **Running STAR alignment on processed fastp files**
-## Necessary files
+## Necessary files in CWD
 * `create_env.sbatch`
 * STAR index
   * **Option 1 (Manual):** First, create the `star_hg38` folder according to the instructions below (see "_Creating the star_hg38 folder_"). Then, copy over `star_index.py` and `star_index.sbatch` and run the SBATCH file.
   * **Option 2 (Pre-Built):** Skip STAR index creation by directly using `--genomeDir /home/lingsn/scratch/star/star_hg38` in your `run_star.sbatch` file.
 * `run_star.py` and `run_star.sbatch`
+* tagXSstrandedData.awk
 ## Instructions
 1. Run `create_env.sbatch` to create the RNA-STAR conda environment
 3. Activate conda environment via `conda activate RNA-STAR`

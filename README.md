@@ -1,11 +1,11 @@
 # **Running STAR alignment on processed fastp files**
-## Necessary files in CWD
+## Necessary files
 * `create_env.sbatch`
 * STAR index
   * **Option 1 (Manual):** First, create the `star_hg38` folder according to the instructions below (see "_Creating the star_hg38 folder_"). Then, copy over `star_index.py` and `star_index.sbatch` and run the SBATCH file.
   * **Option 2 (Pre-Built):** Skip STAR index creation by directly using `--genomeDir /home/lingsn/scratch/star/star_hg38` in your `run_star.sbatch` file.
 * `run_star.py` and `run_star.sbatch`
-* tagXSstrandedData.awk
+* `tagXSstrandedData.awk`
 ## Instructions
 1. Run `create_env.sbatch` to create the RNA-STAR conda environment
 3. Activate conda environment via `conda activate RNA-STAR`
@@ -39,3 +39,6 @@ python3 run_star.py --input 7KO-Cyto-BS_processed_fastqs --genomeDir /home/lings
 * `run_star`
   * This script will manually reverse complement unpaired R2 fastqs prior to STAR alignment.
   * The walltime in `run_star.sbatch` will need to be adjusted depending on the size of your data. For reference, it takes approximately 11m to process 3 GB of data, and 2h20m to process 42 GB of data.
+## Citations
+* Reverse complement code adapted from `run_hisat2.py` by Chase Weidmann
+* `tagXSstrandedData.awk` sourced from [STAR Aligner](https://github.com/alexdobin/STAR/blob/master/extras/scripts/tagXSstrandedData.awk) by Alex Dobin

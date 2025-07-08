@@ -116,19 +116,16 @@ class StarAligner:
             file = subprocess.run(["samtools", "view", ## open up merged .bam
                                     "-h", str(self.merged_bam)],
                                     stdout = subprocess.PIPE,
-                                    check = True, 
-                                    text = True)
+                                    check = True)
             with open(self.sam_file, "w") as out_f:
                 subprocess.run(["awk", "-v", "strType=2", ## run awk script
                                 "-f", str(awk_dir)],
                                 input = file.stdout, 
                                 stdout = out_f,
-                                check = True, 
-                                text = True)
+                                check = True)
             subprocess.run(["rm", str(self.merged_bam)],
                             check = True, 
-                            capture_output = True,
-                            text = True)
+                            capture_output = True)
         except subprocess.CalledProcessError as e: ## error handling
             print(f"Failed to add XS tags to {self.merged_bam.name}: {e}")
             print("STDERR:", e.stderr)

@@ -106,22 +106,54 @@ class StarAligner:
             raise
         return result
     
-    def merge_bam(self, processed_folder, subfolder):
+    def tagXSstrandedData(self, awk_dir):
         """
-        Merges all .bam files, then 
-        sorts and indexes into .bai
+        Add XS tags to every read in a stranded .bam file
         """
-        merged_bam = processed_folder/f"{subfolder.name}.bam"
+        tmp = f"{self.merged_bam.stem}_tmp.bam"
+
+        try:
+            file = subprocess.run(["samtools", "view", ## open up merged .bam
+                                    "-h", str(self.merged_bam)],
+                                    stdout = subprocess.PIPE,
+                                    check = True, 
+                                    capture_output = True,
+                                    text = True)
+            subprocess.run(["awk", "-v", "strType=2", ## run awk script
+                            "-f", str(awk_dir)],
+                            input = file.stdout, 
+                            stdout = str(tmp),
+                            check = True, 
+                            capture_output = True,
+                            text = True)
+            subprocess.run(["mv", str(tmp), str(self.merged_bam)], ## rename tmp back to original filename
+                            check = True, 
+                            capture_output = True,
+                            text = True)
+        except subprocess.CalledProcessError as e: ## error handling
+            print(f"Failed to add XS tags to {self.merged_bam.name}: {e}")
+            print("STDERR:", e.stderr)
+            print("STDOUT:", e.stdout)
+            traceback.print_exc()
+            raise
+    
+    def merge_bam(self, processed_folder, subfolder, awk_dir):
+        """
+        Merge all .bam files, then 
+        sort and index into .bai
+        """
+        self.merged_bam = processed_folder/f"{subfolder.name}.bam"
         bam_list = [*processed_folder.glob("*out.bam")] # detect .bam files
         rm_list = [*processed_folder.glob("*out.bam")]
 
         try:
             subprocess.run(["samtools", "merge", ## merge all .bam files into one
-                            str(merged_bam), *map(str, bam_list)],
+                            str(self.merged_bam), *map(str, bam_list)],
                             check = True, 
                             capture_output = True,
                             text = True)
-            subprocess.run(["samtools", "index", str(merged_bam)], ## create .bai from .bam
+            self.tagXSstrandedData(awk_dir)
+            subprocess.run(["samtools", "index", str(self.merged_bam)], ## create .bai from .bam
                             check = True,
                             capture_output = True,
                             text = True)
@@ -130,7 +162,7 @@ class StarAligner:
                             capture_output = True,
                             text = True)
         except subprocess.CalledProcessError as e: ## error handling
-            print(f"Failed to create {merged_bam.name} and convert to .bai: {e}")
+            print(f"Failed to create {self.merged_bam.name} and convert to .bai: {e}")
             print("STDERR:", e.stderr)
             print("STDOUT:", e.stdout)
             traceback.print_exc()
@@ -210,6 +242,7 @@ def star_pipeline(folder_name, genomeDir, runThreadN):
     input_dir = current_path/folder_name
     input_name = input_dir.name
     star_index = Path(genomeDir)
+    awk_dir = current_path/"tagXSstrandedData.awk"
 
     ## initialize class
     aligner = StarAligner()
@@ -257,7 +290,7 @@ def star_pipeline(folder_name, genomeDir, runThreadN):
             aligner.paired_reads(runThreadN, paired_r1, paired_r2, star_index, processed_folder) 
 
             ## merge bam files, convert to bai, & remove old files
-            aligner.merge_bam(processed_folder, subfolder)
+            aligner.merge_bam(processed_folder, subfolder, awk_dir)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description = "Runs STAR alignment.")

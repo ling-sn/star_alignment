@@ -157,7 +157,7 @@ class StarAligner:
         sort and index into .bai
         """
         self.merged_bam = processed_folder/f"{subfolder.name}.bam"
-        bam_list = [*processed_folder.glob("*out.bam")] # detect .bam files
+        bam_list = [*processed_folder.glob("*out.bam")] ## detect .bam files
         rm_list = [*processed_folder.glob("*out.bam"), self.sam_file]
 
         try:

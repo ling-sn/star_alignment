@@ -1,6 +1,6 @@
 # **Running STAR alignment on processed fastp files**
 ## Necessary files
-<img src="https://github.com/user-attachments/assets/f8cbbaba-764b-407d-b55e-a79caf103dd2" width="400"/>
+<img src="https://github.com/user-attachments/assets/607f335f-5073-4c4b-b3d6-2e158d59eaed" width="400"/>
 
 * STAR index
   * **Option 1 (Manual):** First, create the `star_hg38` folder according to the instructions below (see "_Creating the star_hg38 folder_"). Then, copy over `star_index.py` and `star_index.sbatch` and run the SBATCH file.

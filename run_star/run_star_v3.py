@@ -144,6 +144,8 @@ class StarAligner:
                             check = True,
                             capture_output = True,
                             text = True)
+            if self.sam_file.exists():
+                self.sam_file.unlink()
         except subprocess.CalledProcessError as e: ## error handling
             print(f"Failed to convert {self.sam_file.name} to .bam: {e}")
             print("STDERR:", e.stderr)
@@ -158,7 +160,7 @@ class StarAligner:
         """
         self.merged_bam = processed_folder/f"{subfolder.name}.bam"
         bam_list = [*processed_folder.glob("*out.bam")] ## detect .bam files
-        rm_list = [*processed_folder.glob("*out.bam"), self.sam_file]
+        rm_list = [*processed_folder.glob("*out.bam")]
 
         try:
             subprocess.run(["samtools", "merge", ## merge all .bam files into one

@@ -1,9 +1,11 @@
 # **Running STAR alignment on processed fastp files**
 ## Necessary files
-* `create_env.sbatch`
+<img src="https://github.com/user-attachments/assets/f8cbbaba-764b-407d-b55e-a79caf103dd2" width="400"/>
+
 * STAR index
   * **Option 1 (Manual):** First, create the `star_hg38` folder according to the instructions below (see "_Creating the star_hg38 folder_"). Then, copy over `star_index.py` and `star_index.sbatch` and run the SBATCH file.
   * **Option 2 (Pre-Built):** Skip STAR index creation by directly using `--genomeDir /home/lingsn/scratch/star/star_hg38` in your `run_star.sbatch` file.
+* `create_env.sbatch`
 * `run_star.py` and `run_star.sbatch`
 * `tagXSstrandedData.awk`
 ## Instructions

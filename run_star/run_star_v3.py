@@ -110,7 +110,7 @@ class StarAligner:
         """
         Add XS tags to every read in a stranded .bam file
         """
-        self.sam_file = f"{self.merged_bam.stem}.sam"
+        self.sam_file = f"{self.merged_bam.rpartition(".")[0]}.sam"
 
         try:
             file = subprocess.run(["samtools", "view", ## open up merged .bam

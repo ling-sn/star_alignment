@@ -145,9 +145,9 @@ class StarAligner:
                             capture_output = True,
                             text = True)
             subprocess.run(["rm", str(self.sam_file)],
-                           check = True,
-                           capture_output = True,
-                           text = True)
+                            check = True,
+                            capture_output = True,
+                            text = True)
         except subprocess.CalledProcessError as e: ## error handling
             print(f"Failed to convert {self.sam_file.name} to .bam: {e}")
             print("STDERR:", e.stderr)

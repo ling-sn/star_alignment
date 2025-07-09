@@ -144,8 +144,10 @@ class StarAligner:
                             check = True,
                             capture_output = True,
                             text = True)
-            if self.sam_file.exists():
-                self.sam_file.unlink()
+            subprocess.run(["rm", str(self.sam_file)],
+                           check = True,
+                           capture_output = True,
+                           text = True)
         except subprocess.CalledProcessError as e: ## error handling
             print(f"Failed to convert {self.sam_file.name} to .bam: {e}")
             print("STDERR:", e.stderr)

@@ -4,7 +4,7 @@
 #SBATCH --mail-type=BEGIN,END,FAIL
 #SBATCH --output=/dev/null
 #SBATCH --account=cweidman0
-#SBATCH --time=15:00
+#SBATCH --time=10:00
 #SBATCH --mem=16000m
 #SBATCH --partition=standard
 #SBATCH --ntasks-per-node=2

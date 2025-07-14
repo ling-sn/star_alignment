@@ -1,4 +1,4 @@
-# **Running STAR alignment on processed fastp files**
+# **PART I: Running STAR alignment on processed fastp files**
 ## Necessary files
 <img src="https://github.com/user-attachments/assets/607f335f-5073-4c4b-b3d6-2e158d59eaed" width="400"/>
 
@@ -31,7 +31,7 @@ Read the following if you want to manually build the STAR index. Otherwise, feel
 ```
 python3 run_star.py --input 7KO-Cyto-BS_processed_fastqs --genomeDir ~/scratch/star/star_hg38 --runThreadN=12
 ```
-* **--input:** Absolute or relative path to folder containing merged, paired, and unpaired fastqs.
+* **--input:** Name of folder containing merged, paired, and unpaired fastqs. DO NOT INPUT A PATH.
 * **--genomeDir:** Path to hg38 genome index. If you are using the pre-built index, you can directly use `~/scratch/star/star_hg38`
 * **--runThreadN=n:** Number of threads. By default n=8, and it is recommended to stay within the range of 8-12 threads for optimal results. However, if you choose to change the number of threads, then `#SBATCH --cpus-per-task=n` must also be changed accordingly within `run_star.sbatch`. 
 ## Additional information
@@ -44,3 +44,24 @@ python3 run_star.py --input 7KO-Cyto-BS_processed_fastqs --genomeDir ~/scratch/s
 ## Citations
 * Reverse complement code adapted from `run_hisat2.py` by Chase Weidmann
 * `tagXSstrandedData.awk` sourced from [STAR Aligner](https://github.com/alexdobin/STAR/blob/master/extras/scripts/tagXSstrandedData.awk) by Alex Dobin
+---
+# **PART II: Realigning BAM files after STAR alignment**
+## Necessary files
+* `realignGap.py` and `realignGap.sbatch`
+## Tools used in STAR realignment script
+* **pysam** is used to iterate through BAM files and write in reads
+* **parasail** is used to align reads with the Smith-Waterman algorithm
+> "Alignment software usually uses a seed alignment algorithm to increase alignment speed; however, this also affects pairwise alignment accuracy, especially for bases near deletion signatures. To solve this, we integrated the Smith-Waterman local alignment algorithm into the pipeline for realignment. Reads that contained any mismatch, deletion, insertion, soft-clip or splicing were further processed by the realignment tool in the BID-pipe package. By setting the penalty of gap open and gap extension as −3 and −2, respectively, deletion signatures can have a higher priority in the alignment" (_Zhang et al., 520_). 
+## When do I use this pipeline?
+This is used right after running the STAR alignment script. Start from the working directory that contains the `alignments` folder.
+## Understanding the realignGap SBATCH
+```
+python3 realignGap.py --folder_name 7KO-Cyto-BS_processed_fastqs --fasta_dir ~/scratch/star/star_hg38/GCF_000001405.40_GRCh38.p14_genomic.fa --discard
+```
+* **--folder_name:** Name of processed_fastqs folder that you wish to realign. DO NOT INPUT A PATH.
+* **--fasta_dir:** Path to FASTA file used to create hg38 genome index. If you used the pre-built index in PART I, you can directly use `~/scratch/star/star_hg38/GCF_000001405.40_GRCh38.p14_genomic.fa`
+* **--discard:** Writes discarded reads into a file for debugging. This is enabled by default, but it can be disabled with `--discard False`.
+## Citations
+* Realignment code adapted from [realignGap](https://github.com/y9c/pseudoU-BIDseq/blob/main/bin/realignGap) by Ye Chang
+* Zhang et al. BID-seq for transcriptome-wide quantitative sequencing of mRNA pseudouridine at base resolution. _Nature Protocols_ 19, 517–538 (2024). https://doi.org/10.1038/s41596-023-00917-5
+

@@ -27,7 +27,7 @@
 # before running this file 
 # 
 # To call this script:
-# sbatch remove_contaminants.sbatch
+# sbatch run_star.sbatch
 ################################################################################
 
 module purge

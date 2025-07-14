@@ -4,7 +4,7 @@
 
 * STAR index
   * **Option 1 (Manual):** First, create the `star_hg38` folder according to the instructions below (see "_Creating the star_hg38 folder_"). Then, copy over `star_index.py` and `star_index.sbatch` and run the SBATCH file.
-  * **Option 2 (Pre-Built; Recommended):** Skip STAR index creation by directly using `--genomeDir /home/lingsn/scratch/star/star_hg38` in your `run_star.sbatch` file.
+  * **Option 2 (Pre-Built; Recommended):** Skip STAR index creation by directly using `--genomeDir ~/scratch/star/star_hg38` in your `run_star.sbatch` file.
 * `create_env.sbatch`
 * `run_star.py` and `run_star.sbatch`
 * `tagXSstrandedData.awk`
@@ -22,17 +22,17 @@ This is used after running the fastp script on your raw data (fastq files).
 ## Creating the star_hg38 folder
 Read the following if you want to manually build the STAR index. Otherwise, feel free to skip this section.
 1. Create an empty folder called `star_hg38` in the working directory containing your data folders
-2. On Great Lakes Cluster, navigate to `/home/<uniqname>/umms-RNAlabDATA/Software/genome_indices/hisat2_hg38/hg38p14_tran/` and copy the following 4 files into `star_hg38`:
+2. On Great Lakes Cluster, navigate to `~/umms-RNAlabDATA/Software/genome_indices/hisat2_hg38/hg38p14_tran/` and copy the following 4 files into `star_hg38`:
    * `GCF_000001405.40_GRCh38.p14_exons.txt`
    * `GCF_000001405.40_GRCh38.p14_genomic.fa`
    * `GCF_000001405.40_GRCh38.p14_genomic.gtf`
    * `GCF_000001405.40_GRCh38.p14_splice_sites.txt`
 ## Understanding the run_star SBATCH
 ```
-python3 run_star.py --input 7KO-Cyto-BS_processed_fastqs --genomeDir /home/<uniqname>/scratch/star/star_hg38 --runThreadN=12
+python3 run_star.py --input 7KO-Cyto-BS_processed_fastqs --genomeDir ~/scratch/star/star_hg38 --runThreadN=12
 ```
 * **--input:** Absolute or relative path to folder containing merged, paired, and unpaired fastqs.
-* **--genomeDir:** Path to hg38 genome index. If you are using the pre-built index, you can directly use `/home/<uniqname>/scratch/star/star_hg38` (remember to replace `<uniqname>` accordingly)
+* **--genomeDir:** Path to hg38 genome index. If you are using the pre-built index, you can directly use `~/scratch/star/star_hg38`
 * **--runThreadN=n:** Number of threads. By default n=8, and it is recommended to stay within the range of 8-12 threads for optimal results. However, if you choose to change the number of threads, then `#SBATCH --cpus-per-task=n` must also be changed accordingly within `run_star.sbatch`. 
 ## Additional information
 * `star_index`

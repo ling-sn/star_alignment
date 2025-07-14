@@ -168,13 +168,13 @@ def split_cigar(cigar, split_points):
                 s, l = split_points.pop(0)
     return new_cigar
 
-def run_realign(bam, fasta_name, discard, processed_folder):
+def run_realign(bam, fasta_dir, discard, processed_folder):
     input_bam_name = Path(bam) ## turn string from list back into filepath
     output_bam_name = processed_folder/f"{input_bam_name.stem}.bam" ## create output BAM filename
 
     ### CODE BELOW FROM realignGap.py
 
-    fafile = pysam.FastaFile(fasta_name) ## specify input FASTA file
+    fafile = pysam.FastaFile(fasta_dir) ## specify input FASTA file
     bamfile = pysam.AlignmentFile(input_bam_name, "rb")
     outfile = pysam.AlignmentFile(output_bam_name, "wb", template=bamfile)
     
@@ -241,7 +241,7 @@ def run_realign(bam, fasta_name, discard, processed_folder):
     ## END CODE
 
 ## Main function
-def obtain_bam(folder_name, fasta_name, discard):
+def obtain_bam(folder_name, fasta_dir, discard):
     current_path = Path.cwd()
     input_dir = current_path/"alignments"/folder_name
     
@@ -252,7 +252,7 @@ def obtain_bam(folder_name, fasta_name, discard):
                 processed_folder.mkdir(exist_ok=True, parents=True)
                 
                 for bam in subfolder.glob("*.bam"):
-                    run_realign(bam, fasta_name, discard, processed_folder)
+                    run_realign(bam, fasta_dir, discard, processed_folder)
 
     except Exception as e:
         print(f"Failed to obtain BAM files for realignment: {e}")
@@ -262,10 +262,10 @@ def obtain_bam(folder_name, fasta_name, discard):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description = "Realigns BAM files in BID-Seq pipeline.")
     parser.add_argument("--folder_name", help = "Name of processed_fastqs folder that you wish to realign", required = True)
-    parser.add_argument("--fasta_name", help = "Path of reference fasta file", required = True)
+    parser.add_argument("--fasta_dir", help = "Path of reference fasta file", required = True)
     parser.add_argument("--discard", action = argparse.BooleanOptionalAction, default = True, help = "Write discarded reads into file for debugging (use '--discard False' to disable)")
     args = parser.parse_args()
 
     print("Starting realignment...")
-    obtain_bam(args.folder_name, args.fasta_name, args.discard)
+    obtain_bam(args.folder_name, args.fasta_dir, args.discard)
     print("Realignment finished.")

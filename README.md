@@ -29,10 +29,10 @@ Read the following if you want to manually build the STAR index. Otherwise, feel
    * `GCF_000001405.40_GRCh38.p14_splice_sites.txt`
 ## Understanding the run_star SBATCH
 ```
-python3 run_star.py --input 7KO-Cyto-BS_processed_fastqs --genomeDir /home/lingsn/scratch/star/star_hg38 --runThreadN=12
+python3 run_star.py --input 7KO-Cyto-BS_processed_fastqs --genomeDir /home/<uniqname>/scratch/star/star_hg38 --runThreadN=12
 ```
 * **--input:** Absolute or relative path to folder containing merged, paired, and unpaired fastqs.
-* **--genomeDir:** Path to hg38 genome index. If you are using the pre-built index, you can directly use `/home/lingsn/scratch/star/star_hg38`
+* **--genomeDir:** Path to hg38 genome index. If you are using the pre-built index, you can directly use `/home/<uniqname>/scratch/star/star_hg38` (remember to replace `<uniqname>` accordingly)
 * **--runThreadN=n:** Number of threads. By default n=8, and it is recommended to stay within the range of 8-12 threads for optimal results. However, if you choose to change the number of threads, then `#SBATCH --cpus-per-task=n` must also be changed accordingly within `run_star.sbatch`. 
 ## Additional information
 * `star_index`
@@ -40,7 +40,7 @@ python3 run_star.py --input 7KO-Cyto-BS_processed_fastqs --genomeDir /home/lings
   * If you are manually building the STAR index, the process may take up to 9 hours to complete.
 * `run_star`
   * This script will manually reverse complement unpaired R2 fastqs prior to STAR alignment.
-  * The walltime in `run_star.sbatch` will need to be adjusted depending on the size of your data. For reference, it takes approximately 11m to process 3 GB of data, and 2h20m to process 42 GB of data.
+  * The walltime in `run_star.sbatch` will need to be adjusted depending on the size of your data. For reference, it takes approximately 10m to process 3 GB of data, and 3h15m to process 42 GB of data.
 ## Citations
 * Reverse complement code adapted from `run_hisat2.py` by Chase Weidmann
 * `tagXSstrandedData.awk` sourced from [STAR Aligner](https://github.com/alexdobin/STAR/blob/master/extras/scripts/tagXSstrandedData.awk) by Alex Dobin

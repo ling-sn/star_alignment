@@ -251,10 +251,10 @@ def bam_index(output_bam_name):
                         check = True,
                         capture_output = True,
                         text = True)
-        # subprocess.run(["rm", str(output_bam_name)],
-        #                 check = True,
-        #                 capture_output = True,
-        #                 text = True)
+        subprocess.run(["rm", str(output_bam_name)],
+                        check = True,
+                        capture_output = True,
+                        text = True)
     except subprocess.CalledProcessError as e:
         print(f"Failed to convert {output_bam_name.name} to .bai: {e}")
         print("STDERR:", e.stderr)

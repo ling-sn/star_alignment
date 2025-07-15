@@ -60,7 +60,7 @@ python3 realignGap.py --folder_name 7KO-Cyto-BS_processed_fastqs --fasta_dir ~/s
 ```
 * **--folder_name:** Name of processed_fastqs folder that you wish to realign. DO NOT INPUT A PATH.
 * **--fasta_dir:** Path to FASTA file used to create hg38 genome index. If you used the pre-built index in PART I, you can directly use `~/scratch/star/star_hg38/GCF_000001405.40_GRCh38.p14_genomic.fa`
-* **--discard:** Writes discarded reads into a file for debugging. This is enabled by default, but it can be disabled with `--discard False`.
+* **--discard:** Writes discarded reads into a file for debugging. This is disabled by default, but it can be enabled with `--discard True`.
 ## Citations
 * Realignment code adapted from [realignGap](https://github.com/y9c/pseudoU-BIDseq/blob/main/bin/realignGap) by Ye Chang
 * Zhang et al. BID-seq for transcriptome-wide quantitative sequencing of mRNA pseudouridine at base resolution. _Nature Protocols_ 19, 517–538 (2024). https://doi.org/10.1038/s41596-023-00917-5

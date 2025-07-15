@@ -33,28 +33,28 @@ eval "$(conda shell.bash hook)"
 conda activate ~/miniconda3/envs/RNA-STAR
 
 declare -a tasks=(
-"python3 realignGap.py --folder_name 7KO-Cyto-BS_processed_fastqs --fasta_dir ~/scratch/star/star_hg38/GCF_000001405.40_GRCh38.p14_genomic.fa --discard False"
+"python3 realignGap.py --folder_name 7KO-Cyto-BS_processed_fastqs --fasta_dir ~/scratch/star/star_hg38/GCF_000001405.40_GRCh38.p14_genomic.fa --no-discard"
 
-"python3 realignGap.py --folder_name 7KO-Cyto-NBS_processed_fastqs --fasta_dir ~/scratch/star/star_hg38/GCF_000001405.40_GRCh38.p14_genomic.fa --discard False"
+"python3 realignGap.py --folder_name 7KO-Cyto-NBS_processed_fastqs --fasta_dir ~/scratch/star/star_hg38/GCF_000001405.40_GRCh38.p14_genomic.fa --no-discard"
 
-"python3 realignGap.py --folder_name 7KO-Nuc-BS_processed_fastqs --fasta_dir ~/scratch/star/star_hg38/GCF_000001405.40_GRCh38.p14_genomic.fa --discard False"
+"python3 realignGap.py --folder_name 7KO-Nuc-BS_processed_fastqs --fasta_dir ~/scratch/star/star_hg38/GCF_000001405.40_GRCh38.p14_genomic.fa --no-discard"
 
-"python3 realignGap.py --folder_name 7KO-Nuc-NBS_processed_fastqs --fasta_dir ~/scratch/star/star_hg38/GCF_000001405.40_GRCh38.p14_genomic.fa --discard False"
+"python3 realignGap.py --folder_name 7KO-Nuc-NBS_processed_fastqs --fasta_dir ~/scratch/star/star_hg38/GCF_000001405.40_GRCh38.p14_genomic.fa --no-discard"
 
-"python3 realignGap.py --folder_name 7LKO-Cyto-BS_processed_fastqs --fasta_dir ~/scratch/star/star_hg38/GCF_000001405.40_GRCh38.p14_genomic.fa --discard False"
+"python3 realignGap.py --folder_name 7LKO-Cyto-BS_processed_fastqs --fasta_dir ~/scratch/star/star_hg38/GCF_000001405.40_GRCh38.p14_genomic.fa --no-discard"
 
-"python3 realignGap.py --folder_name 7LKO-Cyto-NBS_processed_fastqs --fasta_dir ~/scratch/star/star_hg38/GCF_000001405.40_GRCh38.p14_genomic.fa --discard False"
+"python3 realignGap.py --folder_name 7LKO-Cyto-NBS_processed_fastqs --fasta_dir ~/scratch/star/star_hg38/GCF_000001405.40_GRCh38.p14_genomic.fa --no-discard"
 
-"python3 realignGap.py --folder_name 7LKO-Nuc-BS_processed_fastqs --fasta_dir ~/scratch/star/star_hg38/GCF_000001405.40_GRCh38.p14_genomic.fa --discard False"
+"python3 realignGap.py --folder_name 7LKO-Nuc-BS_processed_fastqs --fasta_dir ~/scratch/star/star_hg38/GCF_000001405.40_GRCh38.p14_genomic.fa --no-discard"
 
-"python3 realignGap.py --folder_name 7LKO-Nuc-NBS_processed_fastqs --fasta_dir ~/scratch/star/star_hg38/GCF_000001405.40_GRCh38.p14_genomic.fa --discard False"
+"python3 realignGap.py --folder_name 7LKO-Nuc-NBS_processed_fastqs --fasta_dir ~/scratch/star/star_hg38/GCF_000001405.40_GRCh38.p14_genomic.fa --no-discard"
 
-"python3 realignGap.py --folder_name WT-Cyto-BS_processed_fastqs --fasta_dir ~/scratch/star/star_hg38/GCF_000001405.40_GRCh38.p14_genomic.fa --discard False"
+"python3 realignGap.py --folder_name WT-Cyto-BS_processed_fastqs --fasta_dir ~/scratch/star/star_hg38/GCF_000001405.40_GRCh38.p14_genomic.fa --no-discard"
 
-"python3 realignGap.py --folder_name WT-Cyto-NBS_processed_fastqs --fasta_dir ~/scratch/star/star_hg38/GCF_000001405.40_GRCh38.p14_genomic.fa --discard False"
+"python3 realignGap.py --folder_name WT-Cyto-NBS_processed_fastqs --fasta_dir ~/scratch/star/star_hg38/GCF_000001405.40_GRCh38.p14_genomic.fa --no-discard"
 
-"python3 realignGap.py --folder_name WT-Nuc-BS_processed_fastqs --fasta_dir ~/scratch/star/star_hg38/GCF_000001405.40_GRCh38.p14_genomic.fa --discard False"
+"python3 realignGap.py --folder_name WT-Nuc-BS_processed_fastqs --fasta_dir ~/scratch/star/star_hg38/GCF_000001405.40_GRCh38.p14_genomic.fa --no-discard"
 
-"python3 realignGap.py --folder_name WT-Nuc-NBS_processed_fastqs --fasta_dir ~/scratch/star/star_hg38/GCF_000001405.40_GRCh38.p14_genomic.fa --discard False"
+"python3 realignGap.py --folder_name WT-Nuc-NBS_processed_fastqs --fasta_dir ~/scratch/star/star_hg38/GCF_000001405.40_GRCh38.p14_genomic.fa --no-discard"
 )
 eval ${tasks[$SLURM_ARRAY_TASK_ID]}

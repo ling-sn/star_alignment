@@ -14,6 +14,7 @@ import argparse
 import re
 import parasail
 import pysam
+import subprocess
 
 ## Parasail and cigar functions
 re_split_cigar = re.compile(r"(?P<len>\d+)(?P<op>\D+)")
@@ -168,10 +169,7 @@ def split_cigar(cigar, split_points):
                 s, l = split_points.pop(0)
     return new_cigar
 
-def run_realign(bam, fasta_dir, discard, processed_folder):
-    input_bam_name = Path(bam) ## turn string from list back into filepath
-    output_bam_name = processed_folder/f"{input_bam_name.stem}.bam" ## create output BAM filename
-
+def run_realign(input_bam_name, output_bam_name, fasta_dir, discard):
     ### CODE BELOW FROM realignGap.py
 
     fafile = pysam.FastaFile(fasta_dir) ## specify input FASTA file
@@ -232,13 +230,37 @@ def run_realign(bam, fasta_dir, discard, processed_folder):
                     outfile.write(read)
             else:
                 outfile.write(read)
-        
+
     except Exception as e:
         print(f"Failed to realign {input_bam_name.name}: {e}")
         traceback.print_exc()
         raise
 
     ## END CODE
+
+def bam_index(output_bam_name):
+    sorted_bam = output_bam_name.with_suffix(".sorted.bam")
+    try:
+        subprocess.run(["samtools", "sort", 
+                        "-o", str(sorted_bam),
+                        str(output_bam_name)],
+                        check = True,
+                        capture_output = True,
+                        text = True)
+        subprocess.run(["samtools", "index", str(sorted_bam)], ## create .bai from .bam
+                        check = True,
+                        capture_output = True,
+                        text = True)
+        # subprocess.run(["rm", str(output_bam_name)],
+        #                 check = True,
+        #                 capture_output = True,
+        #                 text = True)
+    except subprocess.CalledProcessError as e:
+        print(f"Failed to convert {output_bam_name.name} to .bai: {e}")
+        print("STDERR:", e.stderr)
+        print("STDOUT:", e.stdout)
+        traceback.print_exc()
+        raise
 
 ## Main function
 def obtain_bam(folder_name, fasta_dir, discard):
@@ -252,7 +274,11 @@ def obtain_bam(folder_name, fasta_dir, discard):
                 processed_folder.mkdir(exist_ok=True, parents=True)
                 
                 for bam in subfolder.glob("*.bam"):
-                    run_realign(bam, fasta_dir, discard, processed_folder)
+                    input_bam_name = Path(bam) ## turn string from list back into filepath
+                    output_bam_name = processed_folder/f"{input_bam_name.stem}.bam" ## create output BAM filename
+
+                    run_realign(input_bam_name, output_bam_name, fasta_dir, discard)
+                    bam_index(output_bam_name)
 
     except Exception as e:
         print(f"Failed to obtain BAM files for realignment: {e}")
@@ -263,7 +289,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description = "Realigns BAM files in BID-Seq pipeline.")
     parser.add_argument("--folder_name", help = "Name of processed_fastqs folder that you wish to realign", required = True)
     parser.add_argument("--fasta_dir", help = "Path of reference fasta file", required = True)
-    parser.add_argument("--discard", action = argparse.BooleanOptionalAction, default = True, help = "Write discarded reads into file for debugging (use '--discard False' to disable)")
+    parser.add_argument("--discard", action = argparse.BooleanOptionalAction, default = False, help = "Write discarded reads into file for debugging. Use '--no-discard' to disable and '--discard' to enable.")
     args = parser.parse_args()
 
     print("Starting realignment...")

@@ -1,4 +1,4 @@
-# <ins>**PART I: Running STAR alignment on processed fastp files**</ins>
+# <ins>**PART I: Running STAR alignment on processed fastqs**</ins>
 ## Necessary files
 <img src="https://github.com/user-attachments/assets/607f335f-5073-4c4b-b3d6-2e158d59eaed" width="400"/>
 

@@ -5,8 +5,8 @@
 #SBATCH --output=realignGap_%u_%A_%a.out
 #SBATCH --array=0-11%2
 #SBATCH --account=cweidman0
-#SBATCH --time=5:00:00
-#SBATCH --mem=8000m
+#SBATCH --time=7:00:00
+#SBATCH --mem=4000m
 #SBATCH --partition=standard
 #SBATCH --ntasks-per-node=2
 #SBATCH --nodes=1

@@ -1,4 +1,4 @@
-# **PART I: Running STAR alignment on processed fastp files**
+# <ins>**PART I: Running STAR alignment on processed fastqs**</ins>
 ## Necessary files
 <img src="https://github.com/user-attachments/assets/607f335f-5073-4c4b-b3d6-2e158d59eaed" width="400"/>
 
@@ -45,7 +45,7 @@ python3 run_star.py --input 7KO-Cyto-BS_processed_fastqs --genomeDir ~/scratch/s
 * Reverse complement code adapted from `run_hisat2.py` by Chase Weidmann
 * `tagXSstrandedData.awk` sourced from [STAR Aligner](https://github.com/alexdobin/STAR/blob/master/extras/scripts/tagXSstrandedData.awk) by Alex Dobin
 ---
-# **PART II: Realigning BAM files after STAR alignment**
+# <ins>**PART II: Realigning BAM files after STAR alignment**</ins>
 ## Necessary files
 * `realignGap.py` and `realignGap.sbatch`
 ## Tools used in STAR realignment script

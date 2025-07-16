@@ -170,8 +170,6 @@ def split_cigar(cigar, split_points):
     return new_cigar
 
 def run_realign(input_bam_name, output_bam_name, fasta_dir, discard):
-    ### CODE BELOW FROM realignGap.py
-
     fafile = pysam.FastaFile(fasta_dir) ## specify input FASTA file
     bamfile = pysam.AlignmentFile(input_bam_name, "rb")
     outfile = pysam.AlignmentFile(output_bam_name, "wb", template=bamfile)
@@ -235,8 +233,6 @@ def run_realign(input_bam_name, output_bam_name, fasta_dir, discard):
         print(f"Failed to realign {input_bam_name.name}: {e}")
         traceback.print_exc()
         raise
-
-    ## END CODE
 
 def bam_index(output_bam_name):
     sorted_bam = output_bam_name.with_suffix(".sorted.bam")

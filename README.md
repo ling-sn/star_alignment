@@ -3,8 +3,8 @@
 <img src="https://github.com/user-attachments/assets/607f335f-5073-4c4b-b3d6-2e158d59eaed" width="400"/>
 
 * STAR index
-  * **Option 1 (Manual):** First, create the `star_hg38` folder according to the instructions below (see "_Creating the star_hg38 folder_"). Then, copy over `star_index.py` and `star_index.sbatch` and run the SBATCH file.
-  * **Option 2 (Pre-Built; Recommended):** Skip STAR index creation by directly using `--genomeDir ~/scratch/star/star_hg38` in your `run_star.sbatch` file.
+  * **Option 1 (Manual):** First, create the `star_index_hg38` folder according to the instructions below (see "_Creating the star_index_hg38 folder_"). Then, copy over `star_index.py` and `star_index.sbatch` and run the SBATCH file.
+  * **Option 2 (Pre-Built; Recommended):** Skip STAR index creation by directly using `--genomeDir ~/umms-RNAlabDATA/Software/genome_indices/star_index_hg38` in your `run_star.sbatch` file.
 * `create_env.sbatch`
 * `run_star.py` and `run_star.sbatch`
 * `tagXSstrandedData.awk`
@@ -19,20 +19,20 @@
 * **samtools** is used to merge single-end and paired .bam files together
 ## When do I use this pipeline?
 This is used after running the fastp script on your raw data (fastq files). 
-## Creating the star_hg38 folder
+## Creating the star_index_hg38 folder
 Read the following if you want to manually build the STAR index. Otherwise, feel free to skip this section.
-1. Create an empty folder called `star_hg38` in the working directory containing your data folders
-2. On Great Lakes Cluster, navigate to `~/umms-RNAlabDATA/Software/genome_indices/hisat2_hg38/hg38p14_tran/` and copy the following 4 files into `star_hg38`:
+1. Create an empty folder called `star_index_hg38` in the working directory containing your data folders
+2. On Great Lakes Cluster, navigate to `~/umms-RNAlabDATA/Software/genome_indices/hisat2_hg38/hg38p14_tran/` and copy the following 4 files into `star_index_hg38`:
    * `GCF_000001405.40_GRCh38.p14_exons.txt`
    * `GCF_000001405.40_GRCh38.p14_genomic.fa`
    * `GCF_000001405.40_GRCh38.p14_genomic.gtf`
    * `GCF_000001405.40_GRCh38.p14_splice_sites.txt`
 ## Understanding the run_star SBATCH
 ```
-python3 run_star.py --input 7KO-Cyto-BS_processed_fastqs --genomeDir ~/scratch/star/star_hg38 --runThreadN=12
+python3 run_star.py --input 7KO-Cyto-BS_processed_fastqs --genomeDir ~/umms-RNAlabDATA/Software/genome_indices/star_index_hg38 --runThreadN=12
 ```
 * **--input:** Name of folder containing merged, paired, and unpaired fastqs. DO NOT INPUT A PATH.
-* **--genomeDir:** Path to hg38 genome index. If you are using the pre-built index, you can directly use `~/scratch/star/star_hg38`
+* **--genomeDir:** Path to hg38 genome index. If you are using the pre-built index, you can directly use `~/umms-RNAlabDATA/Software/genome_indices/star_index_hg38`
 * **--runThreadN=n:** Number of threads. By default n=8, and it is recommended to stay within the range of 8-12 threads for optimal results. However, if you choose to change the number of threads, then `#SBATCH --cpus-per-task=n` must also be changed accordingly within `run_star.sbatch`. 
 ## Additional information
 * `star_index`
@@ -56,11 +56,11 @@ python3 run_star.py --input 7KO-Cyto-BS_processed_fastqs --genomeDir ~/scratch/s
 This is used right after running the STAR alignment script. Start from the working directory that contains the `alignments` folder.
 ## Understanding the realignGap SBATCH
 ```
-python3 realignGap.py --folder_name 7KO-Cyto-BS_processed_fastqs --fasta_dir ~/scratch/star/star_hg38/GCF_000001405.40_GRCh38.p14_genomic.fa --discard
+python3 realignGap.py --folder_name 7KO-Cyto-BS_processed_fastqs --fasta_dir ~/umms-RNAlabDATA/Software/genome_indices/star_index_hg38/GCF_000001405.40_GRCh38.p14_genomic.fa --discard
 ```
 * **--folder_name:** Name of processed_fastqs folder that you wish to realign. DO NOT INPUT A PATH.
-* **--fasta_dir:** Path to FASTA file used to create hg38 genome index. If you used the pre-built index in PART I, you can directly use `~/scratch/star/star_hg38/GCF_000001405.40_GRCh38.p14_genomic.fa`
-* **--discard:** Writes discarded reads into a file for debugging. This is disabled by default with `--no-discard`, but it can be enabled with `--discard`.
+* **--fasta_dir:** Path to FASTA file used to create hg38 genome index. If you used the pre-built index in PART I, you can directly use `~/umms-RNAlabDATA/Software/genome_indices/star_index_hg38/GCF_000001405.40_GRCh38.p14_genomic.fa`
+* **--discard:** Writes discarded reads into a file for debugging. This is disabled by default with `--no-discard`, but it can be enabled with `--discard`
 ## Citations
 * Realignment code adapted from [realignGap](https://github.com/y9c/pseudoU-BIDseq/blob/main/bin/realignGap) by Ye Chang
 * Zhang et al. BID-seq for transcriptome-wide quantitative sequencing of mRNA pseudouridine at base resolution. _Nature Protocols_ 19, 517–538 (2024). https://doi.org/10.1038/s41596-023-00917-5

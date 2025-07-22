@@ -5,12 +5,12 @@ import argparse
 
 def star_index(overhang):
     """
-    Before proceeding, the `star_hg38` folder must be
+    Before proceeding, the `star_index_hg38` folder must be
     located in the directory containing the other data 
     folders you want to process.
     """
     current_path = Path.cwd()
-    genome_dir = f"{current_path}/star_hg38"
+    genome_dir = f"{current_path}/star_index_hg38"
     genome_fasta = f"{genome_dir}/GCF_000001405.40_GRCh38.p14_genomic.fa"
     gtf_file = f"{genome_dir}/GCF_000001405.40_GRCh38.p14_genomic.gtf"
     threads = 2

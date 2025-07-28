@@ -4,8 +4,8 @@
 #SBATCH --mail-type=BEGIN,END,FAIL
 #SBATCH --output=/dev/null
 #SBATCH --account=cweidman0
-#SBATCH --time=10:00
-#SBATCH --mem=16000m
+#SBATCH --time=5:00
+#SBATCH --mem=5000m
 #SBATCH --partition=standard
 #SBATCH --ntasks-per-node=2
 #SBATCH --nodes=1
@@ -29,4 +29,4 @@
 
 module purge
 eval "$(conda shell.bash hook)"
-conda create -n RNA-STAR python=3.9 r-base=4.3.1 hisat2=2.2.1 samtools=1.17 Bioconductor-deseq2=1.40.2 subread=2.0.6 scikit-learn=1.3.0 rpy2=3.5.11 star=2.7.11b pysam=0.21.0 parasail-python=1.3.1
+conda create -n RNA-STAR python=3.9 samtools=1.17 star=2.7.11b pysam=0.21.0 parasail-python=1.3.1 numpy=1.24 pandas=1.4

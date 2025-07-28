@@ -22,7 +22,7 @@
 # For more info on #SBATCH variables, see https://arc.umich.edu/greatlakes/slurm-user-guide/
 # and https://slurm.schedmd.com/sbatch.html
 #
-# This requires a conda environment for genome alignment, edit to your named version in the activate command
+# This requires a conda environment with samtools, pysam, and parasail (RNA-STAR)
 # 
 # To call this script:
 # sbatch realignGap.sbatch

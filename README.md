@@ -48,6 +48,10 @@ python3 run_star.py --input 7KO-Cyto-BS_processed_fastqs --genomeDir ~/umms-RNAl
 ## <ins>**PART II: Realigning BAM files after STAR alignment**</ins>
 ### Necessary files
 * `realignGap.py` and `realignGap.sbatch`
+### Instructions
+1. Activate conda environment via `conda activate RNA-STAR`
+2. Edit `realignGap.sbatch` to match your experiments
+3. Run `realignGap.sbatch` to realign each input folder
 ### Tools used in STAR realignment script
 * **pysam** is used to iterate through BAM files and write in reads
 * **parasail** is used to align reads with the Smith-Waterman algorithm

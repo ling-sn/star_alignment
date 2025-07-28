@@ -13,6 +13,11 @@
 3. Activate conda environment via `conda activate RNA-STAR`
 4. Run `star_index.sbatch` one time to build hg38 genome index (_optional_)
 5. Edit `run_star.sbatch` to match your experiments
+   * Change the following:
+     * `#SBATCH --mail-user=YOUR_UNIQNAME@umich.edu`
+     * `#SBATCH --array=0-11%2`
+     * `#SBATCH --time=4:00:00`
+     * Strings under `declare -a tasks=(`
 6. Run `run_star.sbatch` to align each input folder using STAR
 ### Tools used in STAR alignment script
 * **STAR** is used to align single-end reads (merged/unpaired) and paired reads (unmerged) according to the hg38 genome index
@@ -51,6 +56,11 @@ python3 run_star.py --input 7KO-Cyto-BS_processed_fastqs --genomeDir ~/umms-RNAl
 ### Instructions
 1. Activate conda environment via `conda activate RNA-STAR`
 2. Edit `realignGap.sbatch` to match your experiments
+   * Change the following:
+     * `#SBATCH --mail-user=YOUR_UNIQNAME@umich.edu`
+     * `#SBATCH --array=0-11%2`
+     * `#SBATCH --time=7:00:00`
+     * Strings under `declare -a tasks=(`
 3. Run `realignGap.sbatch` to realign each input folder
 ### Tools used in STAR realignment script
 * **pysam** is used to iterate through BAM files and write in reads

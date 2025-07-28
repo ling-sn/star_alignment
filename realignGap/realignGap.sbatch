@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #SBATCH --job-name=realignGap
-#SBATCH --mail-user=lingsn@umich.edu
+#SBATCH --mail-user=YOUR_UNIQNAME@umich.edu
 #SBATCH --mail-type=BEGIN,END,FAIL
 #SBATCH --output=realignGap_%u_%A_%a.out
 #SBATCH --array=0-11%2

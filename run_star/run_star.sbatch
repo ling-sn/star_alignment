@@ -23,7 +23,7 @@
 # For more info on #SBATCH variables, see https://arc.umich.edu/greatlakes/slurm-user-guide/
 # and https://slurm.schedmd.com/sbatch.html
 #
-# This requires a conda environment with samtools and bowtie2 (RNA-SEQ-2), run create_env.sbatch 
+# This requires a conda environment with samtools and STAR (RNA-STAR), run create_env.sbatch 
 # before running this file 
 # 
 # To call this script:

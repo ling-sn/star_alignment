@@ -53,7 +53,7 @@ python3 run_star.py --input 7KO-Cyto-BS_processed_fastqs --genomeDir ~/umms-RNAl
 * **parasail** is used to align reads with the Smith-Waterman algorithm
 > "Alignment software usually uses a seed alignment algorithm to increase alignment speed; however, this also affects pairwise alignment accuracy, especially for bases near deletion signatures. To solve this, we integrated the Smith-Waterman local alignment algorithm into the pipeline for realignment. Reads that contained any mismatch, deletion, insertion, soft-clip or splicing were further processed by the realignment tool in the BID-pipe package. By setting the penalty of gap open and gap extension as −3 and −2, respectively, deletion signatures can have a higher priority in the alignment" (_Zhang et al., 520_). 
 ### When do I use this pipeline?
-This is used right after running the STAR alignment script. Start from the working directory that contains the `alignments` folder.
+This is used after running the STAR alignment script (`run_star.py`). Start from the working directory that contains the `alignments` folder.
 ### Understanding the realignGap SBATCH
 ```
 python3 realignGap.py --folder_name 7KO-Cyto-BS_processed_fastqs --fasta_dir ~/umms-RNAlabDATA/Software/genome_indices/star_index_hg38/GCF_000001405.40_GRCh38.p14_genomic.fa --discard

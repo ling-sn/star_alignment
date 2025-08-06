@@ -241,6 +241,9 @@ def reverse_complement_fastq(file, output):
                         capture_output = True,
                         text = True)
     except subprocess.CalledProcessError as e:
+        if unzipped_file.exists():
+            unzipped_file.unlink()
+            output.unlink()
         print(f"Failed to create output fastq {output}: {e}")
         print("STDERR:", e.stderr)
         print("STDOUT:", e.stdout)
@@ -258,7 +261,7 @@ def collect_files(subfolder, match_pattern, list):
 
 def star_pipeline(folder_name, genomeDir, runThreadN):
     current_path = Path.cwd()
-    input_dir = current_path/folder_name
+    input_dir = current_path/"filtered_processed_fastqs"/"removed_contam"/folder_name
     star_index = Path(genomeDir)
     awk_dir = current_path/"tagXSstrandedData.awk"
 

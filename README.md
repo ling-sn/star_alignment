@@ -3,8 +3,8 @@
 <img src="https://github.com/user-attachments/assets/607f335f-5073-4c4b-b3d6-2e158d59eaed" width="400"/>
 
 * STAR index
-  * **Option 1 (Manual):** First, create the `star_index_hg38` folder according to the instructions below (see "_Creating the star_index_hg38 folder_"). Then, copy over `star_index.py` and `star_index.sbatch` and run the SBATCH file.
-  * **Option 2 (Pre-Built; Recommended):** Skip STAR index creation by directly using `--genomeDir ~/umms-RNAlabDATA/Software/genome_indices/star_index_hg38` in your `run_star.sbatch` file.
+  * **Option 1 (Pre-Built; Recommended):** Skip STAR index creation by directly using `--genomeDir ~/umms-RNAlabDATA/Software/genome_indices/star_index_hg38` in your `run_star.sbatch` file.
+  * **Option 2 (Manual):** First, create the `star_index_hg38` folder according to the instructions below (see "_Creating the star_index_hg38 folder_"). Then, copy over `star_index.py` and `star_index.sbatch` and run the SBATCH file.
 * `create_env.sbatch`
 * `run_star.py` and `run_star.sbatch`
 * `tagXSstrandedData.awk`

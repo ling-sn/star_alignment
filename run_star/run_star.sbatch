@@ -46,6 +46,6 @@ declare -a tasks=(
 "python3 run_star.py --input WT-Cyto-BS_processed_fastqs --genomeDir ~/umms-RNAlabDATA/Software/genome_indices/star_index_hg38 --runThreadN=8"
 "python3 run_star.py --input WT-Cyto-NBS_processed_fastqs --genomeDir ~/umms-RNAlabDATA/Software/genome_indices/star_index_hg38 --runThreadN=8"
 "python3 run_star.py --input WT-Nuc-BS_processed_fastqs --genomeDir ~/umms-RNAlabDATA/Software/genome_indices/star_index_hg38 --runThreadN=8"
-"python3 run_star.py --input WT-Nuc-NBS_processed_fastqs --genomeDir ~~/umms-RNAlabDATA/Software/genome_indices/star_index_hg38 --runThreadN=8"
+"python3 run_star.py --input WT-Nuc-NBS_processed_fastqs --genomeDir ~/umms-RNAlabDATA/Software/genome_indices/star_index_hg38 --runThreadN=8"
 )
 eval ${tasks[$SLURM_ARRAY_TASK_ID]}

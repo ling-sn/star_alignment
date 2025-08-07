@@ -5,8 +5,8 @@
 #SBATCH --output=run_star_%u_%A_%a.out
 #SBATCH --array=0-11%2
 #SBATCH --account=cweidman0
-#SBATCH --time=4:00:00
-#SBATCH --mem=40000m
+#SBATCH --time=6:00:00
+#SBATCH --mem=50000m
 #SBATCH --cpus-per-task=8
 #SBATCH --partition=standard
 #SBATCH --ntasks-per-node=1

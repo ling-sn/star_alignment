@@ -1,6 +1,6 @@
 ## <ins>**PART I: Running STAR alignment on processed fastqs**</ins>
 ### Necessary files
-<img src="https://github.com/user-attachments/assets/607f335f-5073-4c4b-b3d6-2e158d59eaed" width="400"/>
+<img src="https://github.com/user-attachments/assets/44564f59-d2ce-4caa-befd-6a50d005a439" width="400"/>
 
 * STAR index
   * **Option 1 (Pre-Built; Recommended):** Skip STAR index creation by directly using `--genomeDir ~/umms-RNAlabDATA/Software/genome_indices/star_index_hg38` in your `run_star.sbatch` file.

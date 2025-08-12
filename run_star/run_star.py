@@ -278,7 +278,7 @@ def star_pipeline(folder_name, genomeDir, runThreadN):
             processed_folder = current_path/"alignments"/folder_name/f"{subfolder.name}_star"
             processed_folder.mkdir(exist_ok=True, parents=True)
 
-            for file in subfolder.glob("*.fastq.gz"): ## iterate through files and add to corresponding lsits
+            for file in subfolder.glob("*.fastq.gz"): ## iterate through files and add to corresponding lists
                 try:
                     ## run star alignment functions
                     if "_merged" in file.name:

@@ -1,6 +1,6 @@
 ## <ins>**PART I: Running STAR alignment on processed fastqs**</ins>
 ### Necessary files
-<img src="https://github.com/user-attachments/assets/44564f59-d2ce-4caa-befd-6a50d005a439" width="400"/>
+<img src="https://github.com/user-attachments/assets/f32b33de-13a7-4dff-8d5a-c95a1de00b7f" width="400"/>
 
 * STAR index
   * **Option 1 (Pre-Built; Recommended):** Skip STAR index creation by directly using `--genomeDir ~/umms-RNAlabDATA/Software/genome_indices/star_index_hg38` in your `run_star.sbatch` file.
@@ -8,6 +8,7 @@
 * `create_env.sbatch`
 * `run_star.py` and `run_star.sbatch`
 * `tagXSstrandedData.awk`
+  * This file is accessed from its permanent directory: `~/umms-RNAlabDATA/Software/B-PsiD_tools/tagXSstrandedData.awk`. This path is already included in the code by default, so nothing additional needs to be done.
 ### Instructions
 1. Run `create_env.sbatch` to create the RNA-STAR conda environment
 3. Activate conda environment via `conda activate RNA-STAR`

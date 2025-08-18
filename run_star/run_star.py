@@ -263,7 +263,7 @@ def star_pipeline(folder_name, genomeDir, runThreadN):
     current_path = Path.cwd()
     input_dir = current_path/"filtered_processed_fastqs"/"removed_contam"/folder_name
     star_index = Path(genomeDir)
-    awk_dir = current_path/"tagXSstrandedData.awk"
+    awk_dir = Path("~/umms-RNAlabDATA/Software/B-PsiD_tools/tagXSstrandedData.awk").expanduser()
 
     ## initialize class
     aligner = StarAligner()

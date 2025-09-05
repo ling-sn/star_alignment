@@ -259,7 +259,7 @@ def collect_files(subfolder, match_pattern, list):
         str_name = str(i)
         list.append(str_name)
 
-def star_pipeline(folder_name, genomeDir, runThreadN):
+def main(folder_name, genomeDir, runThreadN):
     current_path = Path.cwd()
     input_dir = current_path/"filtered_processed_fastqs"/"removed_contam"/folder_name
     star_index = Path(genomeDir)
@@ -321,5 +321,5 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     print("Starting STAR alignment pipeline...")
-    star_pipeline(args.input, args.genomeDir, args.runThreadN)
+    main(args.input, args.genomeDir, args.runThreadN)
     print("Pipeline finished.")

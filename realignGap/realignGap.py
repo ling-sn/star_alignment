@@ -259,7 +259,7 @@ def bam_index(output_bam_name):
         raise
 
 ## Main function
-def obtain_bam(folder_name, fasta_dir, discard):
+def main(folder_name, fasta_dir, discard):
     current_path = Path.cwd()
     input_dir = current_path/"alignments"/folder_name
     
@@ -289,5 +289,5 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     print("Starting realignment...")
-    obtain_bam(args.folder_name, args.fasta_dir, args.discard)
+    main(args.folder_name, args.fasta_dir, args.discard)
     print("Realignment finished.")

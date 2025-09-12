@@ -24,7 +24,7 @@
 * **STAR** is used to align single-end reads (merged/unpaired) and paired reads (unmerged) according to the hg38 genome index
 * **samtools** is used to merge single-end and paired .bam files together
 ### When do I use this pipeline?
-This is used after running the fastp script on your raw data (fastq files). 
+This is used after running the contaminant removal script (`rm_contam.py`). Start from the working directory that contains the `filtered_processed_fastqs` folder.
 ### Creating the star_index_hg38 folder
 Read the following if you want to manually build the STAR index. Otherwise, feel free to skip this section.
 1. Create an empty folder called `star_index_hg38` in the working directory containing your data folders

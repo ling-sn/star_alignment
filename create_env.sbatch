@@ -2,7 +2,7 @@
 #SBATCH --job-name=create_env
 #SBATCH --mail-user=YOUR_UNIQNAME@umich.edu
 #SBATCH --mail-type=BEGIN,END,FAIL
-#SBATCH --output=/dev/null
+#SBATCH --output=create_env_%u_%A_%a.out
 #SBATCH --account=cweidman0
 #SBATCH --time=5:00
 #SBATCH --mem=5000m

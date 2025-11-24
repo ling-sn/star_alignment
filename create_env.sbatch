@@ -27,5 +27,5 @@
 
 module purge
 eval "$(conda shell.bash hook)"
-conda create -n RNA-STAR python=3.10 samtools=1.17 star=2.7.11b pysam=0.23.3 parasail-python=1.3.4 numpy=1.26 pandas=2.0 openpyxl=3.1 scipy=1.11 matplotlib=3.10.3 seaborn=0.12.2 python_abi=3.10
+conda create -n RNA-STAR python=3.10 samtools=1.17 star=2.7.11b pysam=0.21.0 parasail-python=1.3.4 numpy=1.26 pandas=2.0 openpyxl=3.1 scipy=1.11 matplotlib=3.7.2 seaborn=0.12.2 python_abi=3.10
 

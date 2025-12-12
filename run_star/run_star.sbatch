@@ -3,11 +3,11 @@
 #SBATCH --mail-user=YOUR_UNIQNAME@umich.edu
 #SBATCH --mail-type=BEGIN,END,FAIL
 #SBATCH --output=run_star_%u_%A_%a.out
-#SBATCH --array=0-11%2
-#SBATCH --account=cweidman0
+#SBATCH --array=0-11%4
+#SBATCH --account=cweidman99
 #SBATCH --time=6:00:00
 #SBATCH --mem=50000m
-#SBATCH --cpus-per-task=8
+#SBATCH --cpus-per-task=4
 #SBATCH --partition=standard
 #SBATCH --ntasks-per-node=1
 #SBATCH --nodes=1
@@ -35,17 +35,17 @@ eval "$(conda shell.bash hook)"
 conda activate ~/miniconda3/envs/RNA-STAR
 
 declare -a tasks=(
-"python3 run_star.py --input 7KO-Cyto-BS_processed_fastqs --genomeDir ~/umms-RNAlabDATA/Software/genome_indices/star_index_hg38 --runThreadN=8"
-"python3 run_star.py --input 7KO-Cyto-NBS_processed_fastqs --genomeDir ~/umms-RNAlabDATA/Software/genome_indices/star_index_hg38 --runThreadN=8"
-"python3 run_star.py --input 7KO-Nuc-BS_processed_fastqs --genomeDir ~/umms-RNAlabDATA/Software/genome_indices/star_index_hg38 --runThreadN=8"
-"python3 run_star.py --input 7KO-Nuc-NBS_processed_fastqs --genomeDir ~/umms-RNAlabDATA/Software/genome_indices/star_index_hg38 --runThreadN=8"
-"python3 run_star.py --input 7LKO-Cyto-BS_processed_fastqs --genomeDir ~/umms-RNAlabDATA/Software/genome_indices/star_index_hg38 --runThreadN=8"
-"python3 run_star.py --input 7LKO-Cyto-NBS_processed_fastqs --genomeDir ~/umms-RNAlabDATA/Software/genome_indices/star_index_hg38 --runThreadN=8"
-"python3 run_star.py --input 7LKO-Nuc-BS_processed_fastqs --genomeDir ~/umms-RNAlabDATA/Software/genome_indices/star_index_hg38 --runThreadN=8"
-"python3 run_star.py --input 7LKO-Nuc-NBS_processed_fastqs --genomeDir ~/umms-RNAlabDATA/Software/genome_indices/star_index_hg38 --runThreadN=8"
-"python3 run_star.py --input WT-Cyto-BS_processed_fastqs --genomeDir ~/umms-RNAlabDATA/Software/genome_indices/star_index_hg38 --runThreadN=8"
-"python3 run_star.py --input WT-Cyto-NBS_processed_fastqs --genomeDir ~/umms-RNAlabDATA/Software/genome_indices/star_index_hg38 --runThreadN=8"
-"python3 run_star.py --input WT-Nuc-BS_processed_fastqs --genomeDir ~/umms-RNAlabDATA/Software/genome_indices/star_index_hg38 --runThreadN=8"
-"python3 run_star.py --input WT-Nuc-NBS_processed_fastqs --genomeDir ~/umms-RNAlabDATA/Software/genome_indices/star_index_hg38 --runThreadN=8"
+"python3 run_star.py --input 7KO-Cyto-BS_processed_fastqs --genomeDir ~/umms-RNAlabDATA/Software/genome_indices/star_index_hg38 --runThreadN=4"
+"python3 run_star.py --input 7KO-Cyto-NBS_processed_fastqs --genomeDir ~/umms-RNAlabDATA/Software/genome_indices/star_index_hg38 --runThreadN=4"
+"python3 run_star.py --input 7KO-Nuc-BS_processed_fastqs --genomeDir ~/umms-RNAlabDATA/Software/genome_indices/star_index_hg38 --runThreadN=4"
+"python3 run_star.py --input 7KO-Nuc-NBS_processed_fastqs --genomeDir ~/umms-RNAlabDATA/Software/genome_indices/star_index_hg38 --runThreadN=4"
+"python3 run_star.py --input 7LKO-Cyto-BS_processed_fastqs --genomeDir ~/umms-RNAlabDATA/Software/genome_indices/star_index_hg38 --runThreadN=4"
+"python3 run_star.py --input 7LKO-Cyto-NBS_processed_fastqs --genomeDir ~/umms-RNAlabDATA/Software/genome_indices/star_index_hg38 --runThreadN=4"
+"python3 run_star.py --input 7LKO-Nuc-BS_processed_fastqs --genomeDir ~/umms-RNAlabDATA/Software/genome_indices/star_index_hg38 --runThreadN=4"
+"python3 run_star.py --input 7LKO-Nuc-NBS_processed_fastqs --genomeDir ~/umms-RNAlabDATA/Software/genome_indices/star_index_hg38 --runThreadN=4"
+"python3 run_star.py --input WT-Cyto-BS_processed_fastqs --genomeDir ~/umms-RNAlabDATA/Software/genome_indices/star_index_hg38 --runThreadN=4"
+"python3 run_star.py --input WT-Cyto-NBS_processed_fastqs --genomeDir ~/umms-RNAlabDATA/Software/genome_indices/star_index_hg38 --runThreadN=4"
+"python3 run_star.py --input WT-Nuc-BS_processed_fastqs --genomeDir ~/umms-RNAlabDATA/Software/genome_indices/star_index_hg38 --runThreadN=4"
+"python3 run_star.py --input WT-Nuc-NBS_processed_fastqs --genomeDir ~/umms-RNAlabDATA/Software/genome_indices/star_index_hg38 --runThreadN=4"
 )
 eval ${tasks[$SLURM_ARRAY_TASK_ID]}

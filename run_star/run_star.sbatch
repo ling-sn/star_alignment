@@ -5,7 +5,7 @@
 #SBATCH --output=run_star_%u_%A_%a.out
 #SBATCH --array=0-11%4
 #SBATCH --account=cweidman99
-#SBATCH --time=6:00:00
+#SBATCH --time=7:00:00
 #SBATCH --mem=50000m
 #SBATCH --cpus-per-task=4
 #SBATCH --partition=standard

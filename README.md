@@ -35,11 +35,11 @@ Read the following if you want to manually build the STAR index. Otherwise, feel
    * `GCF_000001405.40_GRCh38.p14_splice_sites.txt`
 ### Understanding the run_star SBATCH
 ```
-python3 run_star.py --input 7KO-Cyto-BS_processed_fastqs --genomeDir ~/umms-RNAlabDATA/Software/genome_indices/star_index_hg38 --runThreadN=12
+python3 run_star.py --input 7KO-Cyto-BS_processed_fastqs --genomeDir ~/umms-RNAlabDATA/Software/genome_indices/star_index_hg38 --runThreadN=4
 ```
 * **--input:** Name of folder containing merged, paired, and unpaired fastqs. DO NOT INPUT A PATH.
 * **--genomeDir:** Path to hg38 genome index. If you are using the pre-built index, you can directly use `~/umms-RNAlabDATA/Software/genome_indices/star_index_hg38`
-* **--runThreadN=n:** Number of threads. By default n=8, and it is recommended to stay within the range of 8-12 threads for optimal results. However, if you choose to change the number of threads, then `#SBATCH --cpus-per-task=n` must also be changed accordingly within `run_star.sbatch`. 
+* **--runThreadN=n:** Number of threads. By default n=4, but if you choose to change the number of threads, then `#SBATCH --cpus-per-task=n` must also be changed accordingly within `run_star.sbatch`. 
 ### Additional information
 * `star_index`
   * By default, overhang is set to 100 in `star_index.sbatch`. However, you can specify a custom overhang value if necessary. For more information, read about the `--sjdbOverhang` option [here](https://physiology.med.cornell.edu/faculty/skrabanek/lab/angsd/lecture_notes/STARmanual.pdf).

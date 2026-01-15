@@ -5,9 +5,9 @@
 #SBATCH --output=create_env_%u_%A_%a.out
 #SBATCH --account=cweidman0
 #SBATCH --time=5:00
-#SBATCH --mem=5000m
+#SBATCH --mem=3500m
 #SBATCH --partition=standard
-#SBATCH --ntasks-per-node=2
+#SBATCH --ntasks-per-node=1
 #SBATCH --nodes=1
 ################################################################################
 # Edit the strings under 'declare -a tasks=(' to match your experiments.

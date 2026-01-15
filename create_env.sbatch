@@ -3,7 +3,7 @@
 #SBATCH --mail-user=YOUR_UNIQNAME@umich.edu
 #SBATCH --mail-type=BEGIN,END,FAIL
 #SBATCH --output=create_env_%u_%A_%a.out
-#SBATCH --account=cweidman0
+#SBATCH --account=cweidman99
 #SBATCH --time=5:00
 #SBATCH --mem=3500m
 #SBATCH --partition=standard
